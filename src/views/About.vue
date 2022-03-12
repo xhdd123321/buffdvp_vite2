@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 
-const name = ref('')
+const name = ref('about')
 </script>
 
 <template>
