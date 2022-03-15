@@ -10,7 +10,7 @@ import './style/index.css'
 const app = createApp(App)
 
 Object.keys(icons).forEach(key => {
-    app.component(key, icons[key])
+  app.component(key, icons[key])
 })
 
 app.use(router)

@@ -3,13 +3,18 @@ import { ref, reactive } from 'vue'
 import bg from '../../assets/login/bg.png'
 import illustration0 from '../../assets/login/illustration3.svg'
 import { ArrowRight } from '@element-plus/icons-vue'
-import { Login } from '@/api'
+import { UserCreate } from '@/api'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const ruleFormRef = ref(null)
 const ruleForm = reactive({
   username: '',
-  password: ''
+  password: '',
+  re_password: '',
+  nick_name: '',
+  gender: '未知',
+  email: '',
+  mobile: ''
 })
 const rules = reactive({
   username: [
@@ -37,31 +42,45 @@ const rules = reactive({
       message: 'Length should be 6 to 18',
       trigger: 'blur'
     }
+  ],
+  re_password: [
+    {
+      required: true,
+      message: '请二次确认密码',
+      trigger: 'blur'
+    }
+  ],
+  mobile: [
+    {
+      min: 11,
+      max: 11,
+      message: 'Length should be 11',
+      trigger: 'blur'
+    }
   ]
 })
 
-const onLogin = (formEl) => {
+const onLogin = ruleFormRef => {
+  router.push({ name: 'login' })
+  console.log('register!')
+}
+
+const onRegister = (formEl) => {
   if (!formEl) return
   formEl.validate((valid, fields) => {
     if (valid) {
-      Login(ruleForm).then(res => {
-        const msg = res.data.msg
-        alert(msg)
-        router.push({ name: 'home' })
+      UserCreate(ruleForm).then(res => {
+        alert('注册成功')
+        router.push({ name: 'login' })
         console.log('request success!', res)
       }).catch(err => {
-        const msg = err.response.data.msg
-        alert(msg)
-        console.log(err.response.data)
+        const msg = err.response.data
+        alert(JSON.stringify(msg[(Object.keys(msg)[0])][0]))
       })
     } else {
       console.log('error login!', fields)
     }
   })
-}
-
-const onRegister = () => {
-  router.push({ name: 'register' })
   console.log('register!')
 }
 </script>
@@ -85,7 +104,6 @@ const onRegister = () => {
         :rules="rules"
         label-width="auto"
         size="default"
-        hide-required-asterisk
         status-icon
       >
         <img
@@ -107,6 +125,59 @@ const onRegister = () => {
           <el-input
             v-model="ruleForm.password"
             type="password"
+            show-password
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="确认密码"
+          prop="re_password"
+        >
+          <el-input
+            v-model="ruleForm.re_password"
+            type="password"
+            show-password
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="昵称"
+          prop="nick_name"
+        >
+          <el-input v-model="ruleForm.nick_name" />
+        </el-form-item>
+
+        <el-form-item
+          label="性别"
+          prop="gender"
+        >
+          <el-radio-group v-model="ruleForm.gender">
+            <el-radio label="男">
+              男
+            </el-radio>
+            <el-radio label="女">
+              女
+            </el-radio>
+            <el-radio label="未知">
+              未知
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item
+          label="邮箱"
+          prop="email"
+        >
+          <el-input v-model="ruleForm.email" />
+        </el-form-item>
+
+        <el-form-item
+          label="手机"
+          prop="mobile"
+        >
+          <el-input
+            v-model="ruleForm.mobile"
+            type="number"
           />
         </el-form-item>
 
@@ -116,7 +187,7 @@ const onRegister = () => {
               type="success"
               plain
               class="bottom_button"
-              @click="onLogin(ruleFormRef)"
+              @click="onLogin"
             >
               <el-icon class="el-icon--left">
                 <arrow-left />
@@ -126,7 +197,7 @@ const onRegister = () => {
               type="primary"
               plain
               class="bottom_button"
-              @click="onRegister"
+              @click="onRegister(ruleFormRef)"
             >
               注 册<el-icon class="el-icon--right">
                 <arrow-right />

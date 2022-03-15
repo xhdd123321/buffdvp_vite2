@@ -1,9 +1,12 @@
 import { createStore } from 'vuex'
 export default createStore({
   state: {
-    num: 777
+    breadListState: []
   },
   mutations: {
+    breadListMutations (getters, list) {
+      getters.breadListState = list
+    }
   },
   actions: {
   },
