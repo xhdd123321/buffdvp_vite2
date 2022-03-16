@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router/index'
-import store from './store/index'
+import router from './router'
+import store from './store'
 import * as icons from '@element-plus/icons-vue'
 
 // 导入公共样式

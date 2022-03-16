@@ -1,15 +1,5 @@
-import { createStore } from 'vuex'
-export default createStore({
-  state: {
-    breadListState: []
-  },
-  mutations: {
-    breadListMutations (getters, list) {
-      getters.breadListState = list
-    }
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+import { createPinia } from 'pinia'
+
+const store = createPinia()
+
+export default store

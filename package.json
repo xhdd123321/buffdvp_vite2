@@ -12,11 +12,11 @@
     "@types/lodash-es": "*",
     "axios": "^0.26.1",
     "element-plus": "^2.0.5",
+    "pinia": "^2.0.12",
     "unplugin-auto-import": "^0.6.4",
     "unplugin-vue-components": "^0.18.0",
     "vue": "^3.2.25",
-    "vue-router": "4",
-    "vuex": "^4.0.2"
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",
