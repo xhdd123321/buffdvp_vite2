@@ -16,12 +16,11 @@ const breadList = computed(() => route.matched)
       class="breadcrumb"
     >
       <!--默认给一个首页的跳转，如果不需要可以去掉-->
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item><el-icon><Menu /></el-icon></el-breadcrumb-item>
       <!--面包屑列表-->
       <el-breadcrumb-item
         v-for="(item,index) in breadList"
         :key="index"
-        style="cursor: pointer"
         :to="{ path: item.path }"
       >
         {{ item.name }}
