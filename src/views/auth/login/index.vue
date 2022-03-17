@@ -1,9 +1,11 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ArrowRight } from '@element-plus/icons-vue'
-import { Login } from '@/api'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/store/userStore'
+import { ElMessage } from 'element-plus'
 const router = useRouter()
+const userStore = useUserStore()
 const ruleFormRef = ref(null)
 const ruleForm = reactive({
   username: '',
@@ -40,20 +42,18 @@ const rules = reactive({
 
 const onLogin = (formEl) => {
   if (!formEl) return
-  formEl.validate((valid, fields) => {
+  formEl.validate(async (valid, fields) => {
     if (valid) {
-      Login(ruleForm).then(res => {
-        const msg = res.data.msg
-        alert(msg)
-        router.push({ name: 'home' })
-        console.log('request success!', res)
-      }).catch(err => {
-        const msg = err.response.data.msg
-        alert(msg)
-        console.log(err.response.data)
-      })
+      try {
+        await userStore.login(ruleForm)
+        ElMessage.success('登陆成功')
+        await router.push({ name: 'home' })
+      } catch (err) {
+        ElMessage.error('登陆失败，用户名或密码不正确')
+      }
     } else {
       console.log('error auth!', fields)
+      ElMessage.warning('未通过验证')
     }
   })
 }

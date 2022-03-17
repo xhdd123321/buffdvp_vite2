@@ -1,34 +1,81 @@
 <script setup>
-import { ArrowRight } from '@element-plus/icons-vue'
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-
-const route = useRoute()
-
-const breadList = computed(() => route.matched)
-
+import { useUserStore } from '@/store/userStore'
+import router from '@/router'
+import { ElMessage } from 'element-plus'
+const userStore = useUserStore()
+const handleCommand = (command) => {
+  switch (command) {
+    case 'a':
+      break
+    case 'b':
+      break
+    case 'c':
+      userStore.logout()
+      ElMessage.success('登出成功')
+      router.push({ name: 'login' })
+      break
+    default:
+      // eslint-disable-next-line no-undef
+      ElMessage({ message: `click on item ${command}` })
+  }
+}
 </script>
 
 <template>
-  <el-header>
-    <el-breadcrumb
-      :separator-icon="ArrowRight"
-      class="breadcrumb"
-    >
-      <!--默认给一个首页的跳转，如果不需要可以去掉-->
-      <el-breadcrumb-item><el-icon><Menu /></el-icon></el-breadcrumb-item>
-      <!--面包屑列表-->
-      <el-breadcrumb-item
-        v-for="(item,index) in breadList"
-        :key="index"
-        :to="{ path: item.path }"
-      >
-        {{ item.name }}
-      </el-breadcrumb-item>
-    </el-breadcrumb>
-  </el-header>
+  <div class="header">
+    <div class="left-side" />
+    <ul class="right-side">
+      <li>
+        xxx
+      </li>
+      <li>
+        xxx
+      </li>
+      <li>
+        <el-dropdown @command="handleCommand">
+          <el-avatar
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            alt="avatar"
+          />
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="a">
+                <span>用户中心</span>
+              </el-dropdown-item>
+              <el-dropdown-item command="b">
+                <span>用户设置</span>
+              </el-dropdown-item>
+              <el-dropdown-item command="c">
+                <span>退出登录</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </li>
+    </ul>
+  </div>
+
 </template>
 
 <style scoped>
-
+.header{
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+.left-side {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+.right-side {
+  display: flex;
+  padding-right: 20px;
+  list-style: none;
+}
+.right-side li {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
 </style>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from '@/utils/auth'
 
 const instance = axios.create({
   baseURL: '/api',
@@ -12,6 +13,13 @@ const instance = axios.create({
 
 // 添加请求拦截器
 instance.interceptors.request.use(config => {
+  const token = getToken()
+  if (token) {
+    if (!config.headers) {
+      config.headers = {}
+    }
+    config.headers['X-CSRFToken'] = token
+  }
   return config
 })
 
@@ -19,6 +27,6 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(response => {
   return response
 }, err => {
-  return Promise.reject(err)
+  return Promise.reject(err.response)
 })
 export default instance

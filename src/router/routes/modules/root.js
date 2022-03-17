@@ -8,14 +8,19 @@ export default {
   children: [
     {
       path: '',
-      redirect: { name: 'home' }
+      redirect: { name: 'home' },
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: 'home',
       name: 'home',
       component: () => import('@/views/root/body/home/index.vue'),
       meta: {
-        requiresAuth: false
+        title: '首页',
+        requiresAuth: false,
+        icon: 'HomeFilled'
       }
     },
     {
@@ -23,18 +28,24 @@ export default {
       name: 'data',
       component: () => import('@/views/root/body/data/index.vue'),
       meta: {
-        requiresAuth: false
+        title: '数据中心',
+        requiresAuth: false,
+        icon: 'grid'
       },
       children: [
         {
           path: '',
-          redirect: { name: 'dataOne' }
+          redirect: { name: 'dataOne' },
+          meta: {
+            requiresAuth: false
+          }
         },
         {
           path: 'data-one',
           name: 'dataOne',
           component: () => import('@/views/root/body/data/dataOne.vue'),
           meta: {
+            title: '数据中心one',
             requiresAuth: false
           }
         },
@@ -53,12 +64,17 @@ export default {
       name: 'echart',
       component: () => import('@/views/root/body/echart/index.vue'),
       meta: {
-        requiresAuth: false
+        title: '可视化',
+        requiresAuth: false,
+        icon: 'histogram'
       },
       children: [
         {
           path: '',
-          redirect: { name: 'echartOne' }
+          redirect: { name: 'echartOne' },
+          meta: {
+            requiresAuth: false
+          }
         },
         {
           path: 'echart-one',
@@ -83,12 +99,17 @@ export default {
       name: 'file',
       component: () => import('@/views/root/body/file/index.vue'),
       meta: {
-        requiresAuth: false
+        title: '文件管理',
+        requiresAuth: false,
+        icon: 'files'
       },
       children: [
         {
           path: '',
-          redirect: { name: 'fileOne' }
+          redirect: { name: 'fileOne' },
+          meta: {
+            requiresAuth: false
+          }
         },
         {
           path: 'file-one',
@@ -113,7 +134,9 @@ export default {
       name: 'settings',
       component: () => import('@/views/root/body/settings/index.vue'),
       meta: {
-        requiresAuth: false
+        title: '设置',
+        requiresAuth: false,
+        icon: 'setting'
       }
     }
   ]

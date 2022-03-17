@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ArrowRight } from '@element-plus/icons-vue'
-import { UserCreate } from '@/api'
+import { UserCreate } from '@/api/user'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const ruleFormRef = ref(null)
@@ -76,7 +76,7 @@ const onRegister = (formEl) => {
         alert(JSON.stringify(msg[(Object.keys(msg)[0])][0]))
       })
     } else {
-      console.log('error auth!', fields)
+      console.log('valid error!', fields)
     }
   })
   console.log('register!')

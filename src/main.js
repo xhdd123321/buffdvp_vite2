@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import * as icons from '@element-plus/icons-vue'
+import 'element-plus/dist/index.css'
 
 // 导入公共样式
 import './style/index.css'

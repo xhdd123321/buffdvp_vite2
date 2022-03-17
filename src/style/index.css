@@ -3,6 +3,7 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
+  background-color: rgb(242, 243, 245);
 }
 
 
@@ -11,6 +12,11 @@ html {
   height: 100vh;
   box-sizing: border-box;
 }
+#app{
+  width: 100vw;
+  height: 100vh;
+}
+
 
 label {
   font-weight: 700;
