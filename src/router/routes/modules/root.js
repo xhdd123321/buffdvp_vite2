@@ -115,16 +115,17 @@ export default {
       children: [
         {
           path: '',
-          redirect: { name: 'fileOne' },
+          redirect: { name: 'fileList' },
           meta: {
             requiresAuth: true
           }
         },
         {
-          path: 'file-one',
-          name: 'fileOne',
-          component: () => import('@/views/root/body/file/fileOne.vue'),
+          path: 'file-list',
+          name: 'fileList',
+          component: () => import('@/views/root/body/file/fileList.vue'),
           meta: {
+            title: '文件列表',
             requiresAuth: true,
             requiresAdmin: false
           }
@@ -153,7 +154,7 @@ export default {
       children: [
         {
           path: '',
-          redirect: { name: 'adminUserOne' },
+          redirect: { name: 'userInfo' },
           meta: {
             requiresAuth: true
           }

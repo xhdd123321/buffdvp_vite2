@@ -8,7 +8,12 @@ const routes = [
   { path: '/', redirect: 'root' },
   Auth,
   Root,
-  About
+  About,
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: () => import('@/views/not-found/index.vue')
+  }
 ]
 
 const router = createRouter({

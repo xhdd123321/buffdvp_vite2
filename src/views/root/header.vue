@@ -17,8 +17,8 @@ const handleCommand = (command) => {
       break
     case 'c':
       userStore.logout()
-      ElMessage.success('登出成功')
       router.push({ name: 'login' })
+      ElMessage.success('登出成功')
       break
     default:
       // eslint-disable-next-line no-undef

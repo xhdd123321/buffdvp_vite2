@@ -1,10 +1,14 @@
 import request from '@/utils/request'
 
 export const FileCreate = (data) => {
+  const config = {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }
   return request({
     url: '/file_api/file/',
     method: 'post',
-    data
+    data,
+    config
   })
 }
 

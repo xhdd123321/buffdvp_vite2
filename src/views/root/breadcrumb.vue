@@ -6,7 +6,7 @@ import { computed } from 'vue'
 const route = useRoute()
 
 const breadList = computed(() => route.matched)
-
+console.log(route.matched)
 </script>
 
 <template>
