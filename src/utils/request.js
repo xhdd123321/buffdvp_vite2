@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
 import router from '@/router'
+import { useUserStore } from '@/store/userStore'
+const userStore = useUserStore()
 
 const instance = axios.create({
   baseURL: '/api',
@@ -29,6 +31,7 @@ instance.interceptors.response.use(response => {
   return response
 }, err => {
   if (err.response.status === 401) {
+    userStore.logout()
     router.push({ name: 'login' })
   }
   return Promise.reject(err.response)

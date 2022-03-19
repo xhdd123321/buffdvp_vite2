@@ -37,7 +37,7 @@ export const useUserStore = defineStore('user', {
     async getInfo (pk) {
       const res = await UserRetrieve(pk)
       console.log(res)
-      res.data.image += ('?number=' + Math.random())
+      res.data.image += ('?r=' + Math.random())
       this.setInfo(res.data)
     },
 

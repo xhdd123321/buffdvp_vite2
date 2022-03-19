@@ -2,13 +2,18 @@
 </script>
 
 <template>
-  <el-card class="box-card">
+  <el-card
+    class="box-card"
+    shadow="hover"
+  >
     <template #header>
       <div class="card-header">
         <span>文件管理模块2</span>
       </div>
     </template>
-    <div>xxxxxx</div>
+    <div>
+      <el-skeleton :rows="5" />
+    </div>
   </el-card>
 </template>
 
