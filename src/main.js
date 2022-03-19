@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import * as icons from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
+import '@arco-design/web-vue/dist/arco.css'
 
 // 导入公共样式
 import './style/index.css'
