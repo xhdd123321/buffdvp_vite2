@@ -1,8 +1,10 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import rootRoute from '@/router/routes/modules/root'
+import { useUserStore } from '@/store/userStore'
 
+const userStore = useUserStore()
 const route = useRoute()
 const menusList = rootRoute.children.slice(1)
 const activeTabName = computed(() => route.name)
@@ -28,6 +30,7 @@ const defaultIcon = 'Menu'
       <template v-for="(item, index) in menusList">
         <el-sub-menu
           v-if="item.children"
+          v-show="!item.meta.requiresAdmin || userStore.is_superuser"
           :key="item.path"
           :index="item.name"
           :route="item"
@@ -40,7 +43,7 @@ const defaultIcon = 'Menu'
           </template>
           <el-menu-item
             v-for="(child, chi) in item.children"
-            v-show="child.component"
+            v-show="child.component && (!child.meta.requiresAdmin || userStore.is_superuser)"
             :key="child.path"
             :index="child.name"
             :route="child"
@@ -53,6 +56,7 @@ const defaultIcon = 'Menu'
         </el-sub-menu>
         <el-menu-item
           v-else
+          v-show="!item.meta.requiresAdmin || userStore.is_superuser"
           :key="item.path"
           :index="item.name"
           :route="item"
@@ -61,7 +65,9 @@ const defaultIcon = 'Menu'
             <component :is="item.meta.icon || defaultIcon" />
           </el-icon>
           <span>{{ item.meta.title || item.name }}</span>
-        </el-menu-item></template></el-menu>
+        </el-menu-item>
+      </template>
+    </el-menu>
   </el-aside>
 </template>
 

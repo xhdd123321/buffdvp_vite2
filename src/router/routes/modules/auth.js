@@ -8,7 +8,10 @@ export default {
   children: [
     {
       path: '',
-      redirect: { name: 'login' }
+      redirect: { name: 'login' },
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: 'login',

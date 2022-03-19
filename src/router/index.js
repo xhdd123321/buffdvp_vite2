@@ -2,9 +2,10 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Auth from './routes/modules/auth'
 import About from './routes/modules/about'
 import Root from './routes/modules/root'
+import createRouteGuard from '@/router/guard'
 
 const routes = [
-  { path: '/', redirect: 'auth' },
+  { path: '/', redirect: 'root' },
   Auth,
   Root,
   About
@@ -17,4 +18,7 @@ const router = createRouter({
     return { top: 0 }
   }
 })
+
+createRouteGuard(router)
+
 export default router

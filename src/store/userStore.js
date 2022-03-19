@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { Login, Logout, UserRetrieve } from '@/api/user'
 import { getCookie } from '@/utils/cookie'
-import { clearToken, setToken } from '@/utils/auth'
+import { clearToken, clearUserid, setToken, setUserid } from '@/utils/auth'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -12,7 +12,9 @@ export const useUserStore = defineStore('user', {
     mobile: undefined,
     email: undefined,
     image: undefined,
-    user_type: undefined
+    user_type: undefined,
+    is_superuser: undefined,
+    date_joined: undefined
   }),
   getters: {
     userInfo (state) {
@@ -35,6 +37,7 @@ export const useUserStore = defineStore('user', {
     async getInfo (pk) {
       const res = await UserRetrieve(pk)
       console.log(res)
+      res.data.image += ('?number=' + Math.random())
       this.setInfo(res.data)
     },
 
@@ -47,10 +50,12 @@ export const useUserStore = defineStore('user', {
         console.log('获取csrftoken: ' + getCookie('csrftoken'))
         setToken(getCookie('csrftoken'))
         const pk = res.data.data.id
+        setUserid(pk)
         await this.getInfo(pk)
       } catch (err) {
         clearToken()
         console.log(err)
+        throw err
       }
     },
 
@@ -62,6 +67,7 @@ export const useUserStore = defineStore('user', {
         console.log(err)
       } finally {
         clearToken()
+        clearUserid()
         this.resetInfo()
       }
     }

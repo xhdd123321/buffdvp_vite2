@@ -3,14 +3,15 @@ export default {
   name: 'root',
   component: () => import('@/views/root/index.vue'),
   meta: {
-    requiresAuth: false
+    requiresAuth: true,
+    requiresAdmin: false
   },
   children: [
     {
       path: '',
       redirect: { name: 'home' },
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
@@ -19,7 +20,8 @@ export default {
       component: () => import('@/views/root/body/home/index.vue'),
       meta: {
         title: '首页',
-        requiresAuth: false,
+        requiresAuth: true,
+        requiresAdmin: false,
         icon: 'HomeFilled'
       }
     },
@@ -29,7 +31,8 @@ export default {
       component: () => import('@/views/root/body/data/index.vue'),
       meta: {
         title: '数据中心',
-        requiresAuth: false,
+        requiresAuth: true,
+        requiresAdmin: false,
         icon: 'grid'
       },
       children: [
@@ -37,7 +40,7 @@ export default {
           path: '',
           redirect: { name: 'dataOne' },
           meta: {
-            requiresAuth: false
+            requiresAuth: true
           }
         },
         {
@@ -46,7 +49,8 @@ export default {
           component: () => import('@/views/root/body/data/dataOne.vue'),
           meta: {
             title: '数据中心one',
-            requiresAuth: false
+            requiresAuth: true,
+            requiresAdmin: false
           }
         },
         {
@@ -54,7 +58,8 @@ export default {
           name: 'dataTwo',
           component: () => import('@/views/root/body/data/dataTwo.vue'),
           meta: {
-            requiresAuth: false
+            requiresAuth: true,
+            requiresAdmin: false
           }
         }
       ]
@@ -65,7 +70,8 @@ export default {
       component: () => import('@/views/root/body/echart/index.vue'),
       meta: {
         title: '可视化',
-        requiresAuth: false,
+        requiresAuth: true,
+        requiresAdmin: false,
         icon: 'histogram'
       },
       children: [
@@ -73,7 +79,7 @@ export default {
           path: '',
           redirect: { name: 'echartOne' },
           meta: {
-            requiresAuth: false
+            requiresAuth: true
           }
         },
         {
@@ -81,7 +87,8 @@ export default {
           name: 'echartOne',
           component: () => import('@/views/root/body/echart/echartOne.vue'),
           meta: {
-            requiresAuth: false
+            requiresAuth: true,
+            requiresAdmin: false
           }
         },
         {
@@ -89,7 +96,8 @@ export default {
           name: 'echartTwo',
           component: () => import('@/views/root/body/echart/echartTwo.vue'),
           meta: {
-            requiresAuth: false
+            requiresAuth: true,
+            requiresAdmin: false
           }
         }
       ]
@@ -99,8 +107,9 @@ export default {
       name: 'file',
       component: () => import('@/views/root/body/file/index.vue'),
       meta: {
-        title: '文件管理',
-        requiresAuth: false,
+        title: '文件中心',
+        requiresAuth: true,
+        requiresAdmin: false,
         icon: 'files'
       },
       children: [
@@ -108,7 +117,7 @@ export default {
           path: '',
           redirect: { name: 'fileOne' },
           meta: {
-            requiresAuth: false
+            requiresAuth: true
           }
         },
         {
@@ -116,7 +125,8 @@ export default {
           name: 'fileOne',
           component: () => import('@/views/root/body/file/fileOne.vue'),
           meta: {
-            requiresAuth: false
+            requiresAuth: true,
+            requiresAdmin: false
           }
         },
         {
@@ -124,7 +134,58 @@ export default {
           name: 'fileTwo',
           component: () => import('@/views/root/body/file/fileTwo.vue'),
           meta: {
-            requiresAuth: false
+            requiresAuth: true,
+            requiresAdmin: false
+          }
+        }
+      ]
+    },
+    {
+      path: 'user',
+      name: 'user',
+      component: () => import('@/views/root/body/user/index.vue'),
+      meta: {
+        title: '用户中心',
+        requiresAuth: true,
+        requiresAdmin: false,
+        icon: 'user'
+      },
+      children: [
+        {
+          path: '',
+          redirect: { name: 'adminUserOne' },
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: 'user-info',
+          name: 'userInfo',
+          component: () => import('@/views/root/body/user/userInfo.vue'),
+          meta: {
+            title: '个人信息',
+            requiresAuth: true,
+            requiresAdmin: false
+          }
+        },
+        {
+          path: 'user-setting',
+          name: 'userSetting',
+          component: () => import('@/views/root/body/user/userSetting.vue'),
+          meta: {
+            title: '用户设置',
+            requiresAuth: true,
+            requiresAdmin: false
+          }
+        },
+        {
+          path: 'admin-user',
+          name: 'adminUser',
+          component: () => import('@/views/root/body/user/adminUser.vue'),
+          meta: {
+            title: '用户管理',
+            requiresAuth: true,
+            requiresAdmin: true
           }
         }
       ]
@@ -135,7 +196,8 @@ export default {
       component: () => import('@/views/root/body/settings/index.vue'),
       meta: {
         title: '设置',
-        requiresAuth: false,
+        requiresAuth: true,
+        requiresAdmin: false,
         icon: 'setting'
       }
     }

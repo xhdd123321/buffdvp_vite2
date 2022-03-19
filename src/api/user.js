@@ -39,10 +39,14 @@ export const UserRetrieve = (pk) => {
 }
 
 export const UserUpdate = (pk, data) => {
+  const config = {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }
   return request({
     url: `/user_api/user/${pk}/`,
-    method: 'put',
-    data
+    method: 'patch',
+    data,
+    config
   })
 }
 

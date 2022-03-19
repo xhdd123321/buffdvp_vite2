@@ -2,12 +2,18 @@
 import { useUserStore } from '@/store/userStore'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
+import { getUserid } from '@/utils/auth'
+
 const userStore = useUserStore()
+userStore.getInfo(getUserid())
+
 const handleCommand = (command) => {
   switch (command) {
     case 'a':
+      router.push({ name: 'userInfo' })
       break
     case 'b':
+      router.push({ name: 'userSetting' })
       break
     case 'c':
       userStore.logout()
@@ -26,15 +32,19 @@ const handleCommand = (command) => {
     <div class="left-side" />
     <ul class="right-side">
       <li>
-        xxx
+        <el-tag
+          v-if="userStore.is_superuser"
+          type="danger"
+        >管理员用户</el-tag>
+        <el-tag v-else>普通用户</el-tag>
       </li>
       <li>
-        xxx
+        {{ userStore.username }}
       </li>
       <li>
         <el-dropdown @command="handleCommand">
           <el-avatar
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            :src="userStore.image"
             alt="avatar"
           />
           <template #dropdown>
