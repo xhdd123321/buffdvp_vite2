@@ -1,15 +1,19 @@
 <script setup>
 import { FileCreate, FileDelete, FileList } from '@/api/file'
 import { ElMessage } from 'element-plus'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { downloadFile } from '@/utils/download'
+import { ChartCreate } from '@/api/chart'
 
 const data = ref([])
-const getDataList = async () => {
+const getDataList = async (params = baseParams) => {
   try {
-    const res = await FileList()
+    const res = await FileList(params)
     console.log(res)
     data.value = res.data.results
+    pagination.total = res.data.count
+    pagination.current = params.page
+    pagination.pageSize = params.pageSize
     console.log(data.value)
   } catch (err) {
     console.log(err)
@@ -17,7 +21,6 @@ const getDataList = async () => {
     ElMessage.error('列表获取失败')
   }
 }
-getDataList()
 const columns = [
   {
     title: 'ID',
@@ -53,10 +56,9 @@ const onDownload = async (record) => {
     ElMessage.success('下载链接已建立，请等待下载完成')
   } catch (err) {
     console.log(err)
-    ElMessage.error('文件下载失败')
+    ElMessage.error('下载失败')
   }
 }
-
 const onDelete = async (record) => {
   try {
     const id = record.id
@@ -65,10 +67,21 @@ const onDelete = async (record) => {
     ElMessage.success('删除成功')
   } catch (err) {
     console.log(err)
-    ElMessage.error('文件删除失败')
+    ElMessage.error('删除失败')
   }
 }
-
+const onExtract = async (record) => {
+  try {
+    const form = {
+      file_id: record.id
+    }
+    await ChartCreate(form)
+    ElMessage.success('提取成功')
+  } catch (err) {
+    console.log(err)
+    ElMessage.error('提取失败')
+  }
+}
 const customRequest = async (option) => {
   try {
     const { fileItem } = option
@@ -83,6 +96,33 @@ const customRequest = async (option) => {
   }
 }
 
+const baseParams = {
+  page: 1,
+  pageSize: 10
+}
+const pagination = reactive({
+  current: baseParams.page,
+  pageSize: baseParams.pageSize,
+  showTotal: true,
+  showJumper: true,
+  showPageSize: true
+})
+const onPageChange = (page) => {
+  console.log(page)
+  baseParams.page = page
+  getDataList(baseParams)
+}
+const onPageSizeChange = (pageSize) => {
+  console.log(pageSize)
+  baseParams.page = 1
+  baseParams.pageSize = pageSize
+  getDataList(baseParams)
+}
+
+const initPage = async () => {
+  await getDataList()
+}
+initPage()
 </script>
 
 <template>
@@ -116,8 +156,12 @@ const customRequest = async (option) => {
         </a-col>
       </a-row>
       <a-table
+        row-key="id"
         :columns="columns"
         :data="data"
+        :pagination="pagination"
+        @page-change="onPageChange"
+        @page-size-change="onPageSizeChange"
       >
         <template #optional="{ record }">
           <a-space>
@@ -135,6 +179,14 @@ const customRequest = async (option) => {
             >
               <a-button shape="round">
                 <icon-delete />
+              </a-button>
+            </a-popconfirm>
+            <a-popconfirm
+              content="确定要提取吗?"
+              @ok="onExtract(record)"
+            >
+              <a-button shape="round">
+                <icon-translate />
               </a-button>
             </a-popconfirm>
           </a-space>

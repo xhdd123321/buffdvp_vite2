@@ -5,7 +5,7 @@ import store from './store'
 import * as icons from '@element-plus/icons-vue'
 import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import 'element-plus/dist/index.css'
-import '@arco-design/web-vue/dist/arco.css'
+// import '@arco-design/web-vue/dist/arco.css'
 
 // 导入公共样式
 import './style/index.css'
