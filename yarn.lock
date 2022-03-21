@@ -585,6 +585,14 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+echarts@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.npmmirror.com/echarts/-/echarts-5.3.1.tgz#709e03aaf8c7a4439788272ee5c500cf0dce7e5b"
+  integrity sha512-nWdlbgX3OVY0hpqncSvp0gDt1FRSKWn7lsWEH+PHmfCuvE0QmSw17pczQvm8AvawnLEkmf1Cts7YwQJZNC0AEQ==
+  dependencies:
+    tslib "2.3.0"
+    zrender "5.3.1"
+
 element-plus@^2.0.5:
   version "2.0.5"
   resolved "https://registry.npmjs.org/element-plus/-/element-plus-2.0.5.tgz"
@@ -1678,6 +1686,11 @@ require-from-string@^2.0.2:
   resolved "https://registry.npmmirror.com/require-from-string/-/require-from-string-2.0.2.tgz"
   integrity sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==
 
+resize-detector@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npmmirror.com/resize-detector/-/resize-detector-0.3.0.tgz#fe495112e184695500a8f51e0389f15774cb1cfc"
+  integrity sha512-R/tCuvuOHQ8o2boRP6vgx8hXCCy87H1eY9V5imBYeVNyNVpuL9ciReSccLj2gDcax9+2weXy3bc8Vv+NRXeEvQ==
+
 resize-observer-polyfill@^1.5.1:
   version "1.5.1"
   resolved "https://registry.npmmirror.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
@@ -1893,6 +1906,11 @@ tsconfig-paths@^3.12.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
+tslib@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmmirror.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
+  integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
+
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.npmmirror.com/type-check/-/type-check-0.4.0.tgz"
@@ -1980,6 +1998,19 @@ vue-demi@*:
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.12.1.tgz"
   integrity sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==
 
+vue-demi@^0.12.1:
+  version "0.12.4"
+  resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.12.4.tgz#420dd17628f95f1bbce1102ad3c51074713a8049"
+  integrity sha512-ztPDkFt0TSUdoq1ZI6oD730vgztBkiByhUW7L1cOTebiSBqSYfSQgnhYakYigBkyAybqCTH7h44yZuDJf2xILQ==
+
+vue-echarts@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.npmmirror.com/vue-echarts/-/vue-echarts-6.0.2.tgz#f6d65c4b328d246da9060ded07b83556c1bef09b"
+  integrity sha512-9xDokauJtAc389MNKbwi1I0VDmp4Y6ndAJTQ8T9K7H0ffosTe1OJSJbUtkT7/fVLDFzlCcmg2TfAKaMzbpg5yQ==
+  dependencies:
+    resize-detector "^0.3.0"
+    vue-demi "^0.12.1"
+
 vue-eslint-parser@^8.0.1:
   version "8.3.0"
   resolved "https://registry.npmmirror.com/vue-eslint-parser/-/vue-eslint-parser-8.3.0.tgz"
@@ -2048,3 +2079,10 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmmirror.com/yallist/-/yallist-4.0.0.tgz"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+zrender@5.3.1:
+  version "5.3.1"
+  resolved "https://registry.npmmirror.com/zrender/-/zrender-5.3.1.tgz#fa8e63ac7e719cfd563831fe8c42a9756c5af384"
+  integrity sha512-7olqIjy0gWfznKr6vgfnGBk7y4UtdMvdwFmK92vVQsQeDPyzkHW1OlrLEKg6GHz1W5ePf0FeN1q2vkl/HFqhXw==
+  dependencies:
+    tslib "2.3.0"

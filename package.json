@@ -11,11 +11,13 @@
     "@element-plus/icons-vue": "^1.1.1",
     "@types/lodash-es": "*",
     "axios": "^0.26.1",
+    "echarts": "^5.3.1",
     "element-plus": "^2.0.5",
     "pinia": "^2.0.12",
     "unplugin-auto-import": "^0.6.4",
     "unplugin-vue-components": "^0.18.0",
     "vue": "^3.2.25",
+    "vue-echarts": "^6.0.2",
     "vue-router": "4"
   },
   "devDependencies": {

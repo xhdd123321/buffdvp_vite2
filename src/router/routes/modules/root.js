@@ -38,17 +38,28 @@ export default {
       children: [
         {
           path: '',
-          redirect: { name: 'dataOne' },
+          redirect: { name: 'chartList' },
           meta: {
             requiresAuth: true
           }
         },
         {
-          path: 'data-one',
-          name: 'dataOne',
-          component: () => import('@/views/root/body/data/dataOne.vue'),
+          path: 'chart-list',
+          name: 'chartList',
+          component: () => import('@/views/root/body/data/chartList.vue'),
           meta: {
-            title: '数据中心one',
+            title: '图表列表',
+            requiresAuth: true,
+            requiresAdmin: false
+          }
+        },
+        {
+          path: 'chart-detail/:id',
+          name: 'chartDetail',
+          component: () => import('@/views/root/body/data/chartDetail.vue'),
+          meta: {
+            isHidden: true,
+            title: '图表详情',
             requiresAuth: true,
             requiresAdmin: false
           }
@@ -77,16 +88,18 @@ export default {
       children: [
         {
           path: '',
-          redirect: { name: 'echartOne' },
+          redirect: { name: 'echartTwo' },
           meta: {
             requiresAuth: true
           }
         },
         {
-          path: 'echart-one',
-          name: 'echartOne',
-          component: () => import('@/views/root/body/echart/echartOne.vue'),
+          path: 'echart-result',
+          name: 'echartResult',
+          component: () => import('@/views/root/body/echart/echartResult.vue'),
           meta: {
+            isHidden: true,
+            title: '分析结果',
             requiresAuth: true,
             requiresAdmin: false
           }

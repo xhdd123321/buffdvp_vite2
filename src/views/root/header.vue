@@ -1,9 +1,9 @@
 <script setup>
 import { useUserStore } from '@/store/userStore'
-import router from '@/router'
+import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getUserid } from '@/utils/auth'
-
+const router = useRouter()
 const userStore = useUserStore()
 userStore.getInfo(getUserid())
 

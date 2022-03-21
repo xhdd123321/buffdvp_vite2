@@ -6,6 +6,7 @@ function setupPageGuard (router) {
     if (to.name !== 'login' && to.meta.requiresAuth && !isLogin()) {
       next({ name: 'login' })
     } else {
+      console.log('next')
       next()
     }
   })

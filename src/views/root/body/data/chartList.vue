@@ -3,6 +3,8 @@ import { ElMessage } from 'element-plus'
 import { ref, reactive } from 'vue'
 import { ChartDelete, ChartList } from '@/api/chart'
 import ChartExtractButton from '@/components/chartExtractButton.vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const data = ref([])
 const getDataList = async (params = baseParams) => {
@@ -42,6 +44,9 @@ const columns = [
     align: 'center'
   }
 ]
+const onDetail = (record) => {
+  router.push({ name: 'chartDetail', params: { id: record.id } })
+}
 const onDownload = async (record) => {
   try {
     ElMessage.success('下载链接已建立，请等待下载完成')
@@ -123,6 +128,12 @@ initPage()
       >
         <template #optional="{ record }">
           <a-space>
+            <a-button
+              shape="round"
+              @click="onDetail(record)"
+            >
+              <icon-info-circle />
+            </a-button>
             <a-popconfirm
               content="确定要下载吗?"
               @ok="onDownload(record)"

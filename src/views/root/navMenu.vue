@@ -43,7 +43,7 @@ const defaultIcon = 'Menu'
           </template>
           <el-menu-item
             v-for="(child, chi) in item.children"
-            v-show="child.component && (!child.meta.requiresAdmin || userStore.is_superuser)"
+            v-show="child.component && (!child.meta.requiresAdmin || userStore.is_superuser) && (!child.meta.isHidden || route.name === child.name)"
             :key="child.path"
             :index="child.name"
             :route="child"
