@@ -5,6 +5,7 @@ import { ChartRetrieve } from '@/api/chart'
 import { ElMessage } from 'element-plus'
 const route = useRoute()
 const router = useRouter()
+const loading = ref(true)
 const id = route.params.id
 console.log(id)
 
@@ -70,17 +71,21 @@ const autoANA = () => {
 }
 
 const initPage = async () => {
+  loading.value = true
   await getDataDetail()
   await setShowData(data.value)
   await setTableData(header.value, body.value)
+  loading.value = false
 }
 initPage()
 </script>
 
 <template>
   <el-card
+    v-loading="loading"
     class="box-card"
     shadow="hover"
+    element-loading-text="加载中..."
   >
     <template #header>
       <div class="card-header">

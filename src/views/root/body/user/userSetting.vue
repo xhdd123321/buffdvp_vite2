@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue'
+const form = ref({})
 </script>
 
 <template>
@@ -12,7 +14,18 @@
       </div>
     </template>
     <div>
-      <el-skeleton :rows="5" />
+      <a-form
+        :model="form"
+        :style="{width:'600px'}"
+        @submit="handleSubmit"
+      >
+        <a-form-item
+          field="notice"
+          label="接收通知"
+        >
+          <a-switch v-model="form.notice" />
+        </a-form-item>
+      </a-form>
     </div>
   </el-card>
 </template>

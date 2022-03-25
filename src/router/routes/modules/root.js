@@ -63,16 +63,16 @@ export default {
             requiresAuth: true,
             requiresAdmin: false
           }
-        },
-        {
-          path: 'data-Two',
-          name: 'dataTwo',
-          component: () => import('@/views/root/body/data/dataTwo.vue'),
-          meta: {
-            requiresAuth: true,
-            requiresAdmin: false
-          }
         }
+        // {
+        //   path: 'data-Two',
+        //   name: 'dataTwo',
+        //   component: () => import('@/views/root/body/data/dataTwo.vue'),
+        //   meta: {
+        //     requiresAuth: true,
+        //     requiresAdmin: false
+        //   }
+        // }
       ]
     },
     {
@@ -142,16 +142,16 @@ export default {
             requiresAuth: true,
             requiresAdmin: false
           }
-        },
-        {
-          path: 'file-Two',
-          name: 'fileTwo',
-          component: () => import('@/views/root/body/file/fileTwo.vue'),
-          meta: {
-            requiresAuth: true,
-            requiresAdmin: false
-          }
         }
+        // {
+        //   path: 'file-Two',
+        //   name: 'fileTwo',
+        //   component: () => import('@/views/root/body/file/fileTwo.vue'),
+        //   meta: {
+        //     requiresAuth: true,
+        //     requiresAdmin: false
+        //   }
+        // }
       ]
     },
     {
@@ -183,16 +183,6 @@ export default {
           }
         },
         {
-          path: 'user-setting',
-          name: 'userSetting',
-          component: () => import('@/views/root/body/user/userSetting.vue'),
-          meta: {
-            title: '用户设置',
-            requiresAuth: true,
-            requiresAdmin: false
-          }
-        },
-        {
           path: 'admin-user',
           name: 'adminUser',
           component: () => import('@/views/root/body/user/adminUser.vue'),
@@ -200,6 +190,16 @@ export default {
             title: '用户管理',
             requiresAuth: true,
             requiresAdmin: true
+          }
+        },
+        {
+          path: 'user-setting',
+          name: 'userSetting',
+          component: () => import('@/views/root/body/user/userSetting.vue'),
+          meta: {
+            title: '用户设置',
+            requiresAuth: true,
+            requiresAdmin: false
           }
         }
       ]

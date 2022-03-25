@@ -5,6 +5,7 @@ import { reactive, ref } from 'vue'
 import { downloadFile } from '@/utils/download'
 import { ChartCreate } from '@/api/chart'
 
+const loading = ref(true)
 const data = ref([])
 const getDataList = async (params = baseParams) => {
   try {
@@ -120,13 +121,16 @@ const onPageSizeChange = (pageSize) => {
 }
 
 const initPage = async () => {
+  loading.value = true
   await getDataList()
+  loading.value = false
 }
 initPage()
 </script>
 
 <template>
   <el-card
+    v-loading="loading"
     class="box-card"
     shadow="hover"
   >

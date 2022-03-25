@@ -5,6 +5,7 @@ import { ChartDelete, ChartList } from '@/api/chart'
 import ChartExtractButton from '@/components/chartExtractButton.vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+const loading = ref(true)
 
 const data = ref([])
 const getDataList = async (params = baseParams) => {
@@ -95,13 +96,16 @@ const onChartExtractOk = () => {
 }
 
 const initPage = async () => {
+  loading.value = true
   await getDataList()
+  loading.value = false
 }
 initPage()
 </script>
 
 <template>
   <el-card
+    v-loading="loading"
     class="box-card"
     shadow="hover"
   >

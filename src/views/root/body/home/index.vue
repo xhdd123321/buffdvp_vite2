@@ -1,9 +1,11 @@
 <script setup>
 import { getDashboardData } from '@/api/dashboard'
 import { ElMessage } from 'element-plus'
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import { useUserStore } from '@/store/userStore'
-
+import MemInfoEchart from '@/components/MemInfoEchart.vue'
+import CpuInfoEchart from '@/components/CpuInfoEchart.vue'
+const loading = ref(true)
 const userStore = useUserStore()
 const dashboardData = ref()
 const fetchData = async () => {
@@ -16,13 +18,31 @@ const fetchData = async () => {
     ElMessage.error('获取主页信息失败')
   }
 }
-fetchData()
+const memchart = ref(null)
+const cpuchart = ref(null)
+const initChart = async () => {
+  memchart.value.echartData[0].value = dashboardData.value.memInfo.free
+  memchart.value.echartData[1].value = dashboardData.value.memInfo.used
+  cpuchart.value.percent = dashboardData.value.cpuInfo.percent
+}
+const initPage = async () => {
+  await fetchData()
+  await initChart()
+  loading.value = false
+}
+initPage()
+const timer = setInterval(initPage, 2000)
+onBeforeUnmount(() => {
+  clearInterval(timer)
+})
+
 </script>
 
 <template>
-  <el-row gutter="24">
+  <el-row :gutter="24">
     <el-col :span="16">
       <el-card
+        v-loading="loading"
         class="box-card"
         shadow="hover"
       >
@@ -40,7 +60,7 @@ fetchData()
                   <div><span
                     class="number"
                     style="color: #F56C6C"
-                  >{{ dashboardData?.onlineCount || 0 }}</span> 人</div>
+                  >{{ dashboardData?.siteInfo.onlineCount || 0 }}</span> 人</div>
                 </el-space>
               </el-card>
             </el-col>
@@ -51,7 +71,7 @@ fetchData()
                   <div><span
                     class="number"
                     style="color: #67C23A"
-                  >{{ dashboardData?.registeredCount || 0 }}</span> 人</div>
+                  >{{ dashboardData?.siteInfo.registeredCount || 0 }}</span> 人</div>
                 </el-space>
               </el-card>
             </el-col>
@@ -62,7 +82,7 @@ fetchData()
                   <div><span
                     class="number"
                     style="color: #E6A23C"
-                  >{{ dashboardData?.siteRuntime || 0 }}</span> 天</div>
+                  >{{ dashboardData?.siteInfo.siteRuntime || 0 }}</span> 天</div>
                 </el-space>
               </el-card>
             </el-col>
@@ -70,21 +90,93 @@ fetchData()
         </div>
       </el-card>
       <el-card
+        v-loading="loading"
         class="box-card"
         shadow="hover"
       >
         <template #header>
           <div class="card-header">
-            <span>内容数据</span>
+            <span>性能监控</span>
           </div>
         </template>
-        <div>
-          <el-skeleton :rows="12" />
+        <a-row
+          style="margin-bottom: 30px"
+          :gutter="24"
+        >
+          <a-col :span="8">
+            <a-space
+              direction="vertical"
+              fill
+            >
+              <div class="arco-statistic-title">服务器系统</div>
+              <a-tag color="arcoblue">{{ dashboardData?.sysInfo.platform || 'unknown' }}</a-tag>
+            </a-space>
+          </a-col>
+          <a-col :span="8">
+            <a-statistic
+              title="Logical CPU"
+              :value="dashboardData?.cpuInfo.count_logical || 0"
+              show-group-separator
+            />
+          </a-col>
+          <a-col :span="8">
+            <a-statistic
+              title="Physical CPU"
+              :value="dashboardData?.cpuInfo.count_phy || 0"
+              show-group-separator
+            />
+          </a-col>
+        </a-row>
+        <a-divider />
+        <a-row
+          style="margin-bottom: 30px"
+          :gutter="24"
+        >
+          <a-col :span="12">
+            <a-statistic
+              title="接受数据字节"
+              :value="dashboardData?.netInfo.bytes_recv || 0"
+              show-group-separator
+            >
+              <template #prefix>
+                <icon-arrow-rise />
+              </template>
+              <template #suffix>
+                bytes
+              </template>
+            </a-statistic>
+          </a-col>
+          <a-col :span="12">
+            <a-statistic
+              title="发送数据字节"
+              :value="dashboardData?.netInfo.bytes_recv || 0"
+              show-group-separator
+            >
+              <template #prefix>
+                <icon-arrow-rise />
+              </template>
+              <template #suffix>
+                bytes
+              </template>
+            </a-statistic>
+          </a-col>
+        </a-row>
+        <a-divider />
+        <div class="chart-map">
+          <a-row>
+            <a-col :span="12">
+              <MemInfoEchart ref="memchart" />
+            </a-col>
+            <a-col :span="12">
+              <CpuInfoEchart ref="cpuchart" />
+            </a-col>
+          </a-row>
         </div>
       </el-card>
     </el-col>
     <el-col :span="8">
       <el-card
+        v-loading="loading"
         class="box-card"
         shadow="hover"
       >
@@ -95,19 +187,45 @@ fetchData()
         </template>
         <div>
           <el-card
-            v-for="o in 4"
-            :key="o"
             class="notice"
             shadow="hover"
           >
             <el-space>
-              <el-icon><tickets /></el-icon>
-              <span>这是第 {{ o }} 条通知。 This is the {{ o }} notice.</span>
+              <a-tag color="arcoblue">通知</a-tag>
+              <span>4 月新系统升级计划通知</span>
+            </el-space>
+          </el-card>
+          <el-card
+            class="notice"
+            shadow="hover"
+          >
+            <el-space>
+              <a-tag color="orangered">活动</a-tag>
+              <span>内容最新优惠活动</span>
+            </el-space>
+          </el-card>
+          <el-card
+            class="notice"
+            shadow="hover"
+          >
+            <el-space>
+              <a-tag color="cyan">通知</a-tag>
+              <span>新增内容已经通过审核，详情请前往通知中心查看</span>
+            </el-space>
+          </el-card>
+          <el-card
+            class="notice"
+            shadow="hover"
+          >
+            <el-space>
+              <a-tag color="arcoblue">通知</a-tag>
+              <span>1 月新系统升级计划通知</span>
             </el-space>
           </el-card>
         </div>
       </el-card>
       <el-card
+        v-loading="loading"
         class="box-card"
         shadow="hover"
       >
@@ -133,5 +251,8 @@ fetchData()
 }
 .box-card {
   margin-bottom: 24px;
+}
+.chart-map{
+  display: flex;
 }
 </style>
