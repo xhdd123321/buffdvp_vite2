@@ -29,3 +29,12 @@ export const ChartDelete = (pk) => {
     method: 'delete'
   })
 }
+
+export const ChartExport = (pk, params) => {
+  return request({
+    url: `/data_api/chart/${pk}/export/`,
+    method: 'get',
+    responseType: 'blob',
+    params
+  })
+}

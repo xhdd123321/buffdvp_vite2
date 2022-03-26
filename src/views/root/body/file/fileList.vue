@@ -170,6 +170,14 @@ initPage()
         <template #optional="{ record }">
           <a-space>
             <a-popconfirm
+              content="确定要提取吗?"
+              @ok="onExtract(record)"
+            >
+              <a-button shape="round">
+                <icon-translate />
+              </a-button>
+            </a-popconfirm>
+            <a-popconfirm
               content="确定要下载吗?"
               @ok="onDownload(record)"
             >
@@ -183,14 +191,6 @@ initPage()
             >
               <a-button shape="round">
                 <icon-delete />
-              </a-button>
-            </a-popconfirm>
-            <a-popconfirm
-              content="确定要提取吗?"
-              @ok="onExtract(record)"
-            >
-              <a-button shape="round">
-                <icon-translate />
               </a-button>
             </a-popconfirm>
           </a-space>

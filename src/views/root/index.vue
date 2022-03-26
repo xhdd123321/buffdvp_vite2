@@ -34,9 +34,13 @@ import Header from './header.vue'
   height: auto;
   border-left: none;
   padding-top: 20px;
+  padding-bottom: 10px;
 }
 .common-layout{
   width: 100%;
   height: 100%;
+}
+.content {
+  padding-top: 10px;
 }
 </style>

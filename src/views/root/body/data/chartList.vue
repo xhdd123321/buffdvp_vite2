@@ -3,11 +3,13 @@ import { ElMessage } from 'element-plus'
 import { ref, reactive } from 'vue'
 import { ChartDelete, ChartList } from '@/api/chart'
 import ChartExtractButton from '@/components/chartExtractButton.vue'
+import ChartExportModal from '@/components/ChartExportModal.vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const loading = ref(true)
 
 const data = ref([])
+const modelRef = ref(null)
 const getDataList = async (params = baseParams) => {
   try {
     const res = await ChartList(params)
@@ -48,13 +50,8 @@ const columns = [
 const onDetail = (record) => {
   router.push({ name: 'chartDetail', params: { id: record.id } })
 }
-const onDownload = async (record) => {
-  try {
-    ElMessage.success('下载链接已建立，请等待下载完成')
-  } catch (err) {
-    console.log(err)
-    ElMessage.error('文件下载失败')
-  }
+const onExport = (record) => {
+  modelRef.value.selectChart(record.id)
 }
 const onDelete = async (record) => {
   try {
@@ -122,6 +119,7 @@ initPage()
           </a-space>
         </a-col>
       </a-row>
+      <ChartExportModal ref="modelRef" />
       <a-table
         :columns="columns"
         :data="data"
@@ -138,14 +136,12 @@ initPage()
             >
               <icon-info-circle />
             </a-button>
-            <a-popconfirm
-              content="确定要下载吗?"
-              @ok="onDownload(record)"
+            <a-button
+              shape="round"
+              @click="onExport(record)"
             >
-              <a-button shape="round">
-                <icon-download />
-              </a-button>
-            </a-popconfirm>
+              <icon-export />
+            </a-button>
             <a-popconfirm
               content="确定要删除吗?"
               @ok="onDelete(record)"
