@@ -15,7 +15,7 @@ console.log(route.matched)
     class="breadcrumb"
   >
     <!--默认给一个首页的跳转，如果不需要可以去掉-->
-    <el-breadcrumb-item><el-icon><Menu /></el-icon></el-breadcrumb-item>
+    <el-breadcrumb-item><icon-apps /></el-breadcrumb-item>
     <!--面包屑列表-->
     <el-breadcrumb-item
       v-for="(item,index) in breadList"

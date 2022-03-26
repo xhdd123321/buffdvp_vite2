@@ -3,8 +3,10 @@ import { getDashboardData } from '@/api/dashboard'
 import { ElMessage } from 'element-plus'
 import { onBeforeUnmount, ref } from 'vue'
 import { useUserStore } from '@/store/userStore'
+import { useRouter } from 'vue-router'
 import MemInfoEchart from '@/components/MemInfoEchart.vue'
 import CpuInfoEchart from '@/components/CpuInfoEchart.vue'
+const router = useRouter()
 const loading = ref(true)
 const userStore = useUserStore()
 const dashboardData = ref()
@@ -235,7 +237,43 @@ onBeforeUnmount(() => {
           </div>
         </template>
         <div>
-          <el-skeleton :rows="6" />
+          <div
+            class="divider-demo"
+          >
+            <a-button
+              type="primary"
+              shape="round"
+              long
+              @click="router.push({name:'quickStart'})"
+            >
+              <template #icon>
+                <icon-bulb />
+              </template>
+              快速开始
+            </a-button>
+            <a-divider class="half-divider" />
+            <a-button
+              type="secondary"
+              shape="round"
+              long
+            >
+              <template #icon>
+                <icon-bulb />
+              </template>
+              平台简介
+            </a-button>
+            <a-divider class="half-divider" />
+            <a-button
+              type="secondary"
+              shape="round"
+              long
+            >
+              <template #icon>
+                <icon-bulb />
+              </template>
+              用户说明
+            </a-button>
+          </div>
         </div>
       </el-card>
     </el-col>
@@ -254,5 +292,29 @@ onBeforeUnmount(() => {
 }
 .chart-map{
   display: flex;
+}
+
+.flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-box .avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
+  color: var(--color-text-2);
+  font-size: 16px;
+  background-color: var(--color-fill-3);
+  border-radius: 50%;
+}
+.flex-box .content {
+  flex: 1;
+  color: var(--color-text-2);
+  font-size: 12px;
+  line-height: 20px;
 }
 </style>

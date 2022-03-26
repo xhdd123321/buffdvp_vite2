@@ -9,7 +9,7 @@ const route = useRoute()
 const menusList = rootRoute.children.slice(1)
 const activeTabName = computed(() => route.name)
 
-const defaultIcon = 'Menu'
+const defaultIcon = 'icon-apps'
 </script>
 
 <template>

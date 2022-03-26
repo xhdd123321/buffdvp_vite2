@@ -22,7 +22,7 @@ export default {
         title: '首页',
         requiresAuth: true,
         requiresAdmin: false,
-        icon: 'HomeFilled'
+        icon: 'icon-home'
       }
     },
     {
@@ -33,7 +33,7 @@ export default {
         title: '数据中心',
         requiresAuth: true,
         requiresAdmin: false,
-        icon: 'grid'
+        icon: 'icon-common'
       },
       children: [
         {
@@ -83,7 +83,7 @@ export default {
         title: '可视化',
         requiresAuth: true,
         requiresAdmin: false,
-        icon: 'histogram'
+        icon: 'icon-bar-chart'
       },
       children: [
         {
@@ -198,6 +198,36 @@ export default {
           component: () => import('@/views/root/body/user/userSetting.vue'),
           meta: {
             title: '用户设置',
+            requiresAuth: true,
+            requiresAdmin: false
+          }
+        }
+      ]
+    },
+    {
+      path: 'help',
+      name: 'help',
+      component: () => import('@/views/root/body/help/index.vue'),
+      meta: {
+        title: '帮助文档',
+        requiresAuth: true,
+        requiresAdmin: false,
+        icon: 'help'
+      },
+      children: [
+        {
+          path: '',
+          redirect: { name: 'quickStart' },
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          path: 'quick-start',
+          name: 'quickStart',
+          component: () => import('@/views/root/body/help/quickStart.vue'),
+          meta: {
+            title: '快速开始',
             requiresAuth: true,
             requiresAdmin: false
           }
