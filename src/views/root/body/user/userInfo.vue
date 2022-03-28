@@ -1,5 +1,5 @@
 <script setup>
-import { UserUpdate } from '@/api/user'
+import { PasswordChange, UserUpdate } from '@/api/user'
 import { getUserid } from '@/utils/auth'
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -107,6 +107,84 @@ const rules = reactive({
     }
   ]
 })
+
+const passwordForm = ref({})
+
+const confirmPassword = (rule, value, callback) => {
+  if (value !== passwordForm.value.new_password) {
+    callback(new Error('两次密码不一致'))
+  } else {
+    callback()
+  }
+}
+
+const rulesPassword = reactive({
+  old_password: [
+    {
+      required: true,
+      message: '请输入旧密码',
+      trigger: 'blur'
+    },
+    {
+      min: 6,
+      max: 18,
+      message: 'Length should be 6 to 18',
+      trigger: 'blur'
+    }
+  ],
+  new_password: [
+    {
+      required: true,
+      message: '请输入新密码',
+      trigger: 'blur'
+    },
+    {
+      min: 6,
+      max: 18,
+      message: 'Length should be 6 to 18',
+      trigger: 'blur'
+    }
+  ],
+  re_password: [
+    {
+      required: true,
+      message: '请二次确认密码',
+      trigger: 'blur'
+    },
+    {
+      validator: confirmPassword,
+      trigger: 'blur'
+    }
+  ]
+})
+
+const passwordRef = ref(null)
+const onSavePassword = async (passwordRef) => {
+  try {
+    if (!passwordRef) return
+    passwordRef.validate(async (valid, fields) => {
+      if (valid) {
+        try {
+          const pk = getUserid()
+          await PasswordChange(pk, passwordForm.value)
+          ElMessage.success('密码修改成功')
+        } catch (err) {
+          ElMessage.error('修改失败，旧密码错误')
+        }
+      } else {
+        console.log('validate error!', fields)
+        ElMessage.warning('未通过验证')
+      }
+    })
+  } catch (err) {
+    console.log(err)
+    ElMessage.error('未通过验证')
+  }
+}
+
+const onResetPassword = () => {
+  passwordForm.value = {}
+}
 </script>
 
 <template>
@@ -171,6 +249,8 @@ const rules = reactive({
       </div>
     </template>
     <div>
+      <a-alert closable>保存后生效</a-alert>
+      <a-divider />
       <el-upload
         ref="uploadRef"
         action="#"
@@ -259,6 +339,72 @@ const rules = reactive({
             type="info"
             plain
             @click="onReset()"
+          >重 设</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </el-card>
+  <el-card
+    class="box-card"
+    shadow="hover"
+  >
+    <template #header>
+      <div class="card-header">
+        <span>密码修改</span>
+      </div>
+    </template>
+    <div>
+      <el-form
+        ref="passwordRef"
+        label-position="top"
+        class="login-form"
+        :rules="rulesPassword"
+        :model="passwordForm"
+        label-width="auto"
+        size="default"
+        status-icon
+      >
+        <el-form-item
+          label="旧密码"
+          prop="old_password"
+        >
+          <el-input
+            v-model="passwordForm.old_password"
+            type="password"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item
+          label="新密码"
+          prop="new_password"
+        >
+          <el-input
+            v-model="passwordForm.new_password"
+            type="password"
+            show-password
+          />
+        </el-form-item>
+
+        <el-form-item
+          label="确认密码"
+          prop="re_password"
+        >
+          <el-input
+            v-model="passwordForm.re_password"
+            type="password"
+            show-password
+          />
+        </el-form-item>
+        <el-form-item class="button-group">
+          <el-button
+            type="success"
+            plain
+            @click="onSavePassword(passwordRef)"
+          >保 存</el-button>
+          <el-button
+            type="info"
+            plain
+            @click="onResetPassword()"
           >重 设</el-button>
         </el-form-item>
       </el-form>

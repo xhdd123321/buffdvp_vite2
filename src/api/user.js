@@ -56,3 +56,11 @@ export const UserDelete = (pk) => {
     method: 'delete'
   })
 }
+
+export const PasswordChange = (pk, data) => {
+  return request({
+    url: `/user_api/user/${pk}/changePassword/`,
+    method: 'post',
+    data
+  })
+}
