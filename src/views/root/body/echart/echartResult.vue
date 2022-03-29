@@ -11,6 +11,7 @@ const loading = ref(true)
 
 const barList = ref([])
 const pieList = ref([])
+const scatterList = ref([])
 const data = ref({})
 const originData = ref({})
 const getDataDetail = async () => {
@@ -25,6 +26,7 @@ const getDataDetail = async () => {
     data.value = res.data
     barList.value = data.value.bar_list
     pieList.value = data.value.pie_list
+    scatterList.value = data.value.scatter_list
   } catch (err) {
     console.log(err)
     data.value = {}
@@ -76,8 +78,30 @@ const setTableData = async (header, body) => {
   console.log(tableData.value)
 }
 
+const describeColumns = ref([])
+const describeData = ref([])
+const setDescribeData = async () => {
+  const describe = data.value.describe
+  const temp = []
+  const header = describe.header
+  for (const i in header) {
+    temp.push({
+      title: header[i],
+      dataIndex: header[i],
+      sortable: {
+        sortDirections: ['ascend', 'descend']
+      }
+    })
+  }
+  describeColumns.value = temp
+  describeData.value = describe.body
+  console.log(describeColumns.value)
+  console.log(describeData.value)
+}
+
 const BarRefs = ref([])
 const PieRefs = ref([])
+const ScatterRefs = ref([])
 const setBarRefs = (el) => {
   if (el) {
     BarRefs.value.push(el)
@@ -86,6 +110,11 @@ const setBarRefs = (el) => {
 const setPieRefs = (el) => {
   if (el) {
     PieRefs.value.push(el)
+  }
+}
+const setScatterRefs = (el) => {
+  if (el) {
+    ScatterRefs.value.push(el)
   }
 }
 const initBar = async () => {
@@ -102,9 +131,17 @@ const initPie = async () => {
     myChart.setOption(list[i])
   }
 }
+const initScatter = async () => {
+  const list = scatterList.value
+  for (const i in list) {
+    const myChart = echarts.init(ScatterRefs.value[i])
+    myChart.setOption(list[i])
+  }
+}
 const initChart = async () => {
   initBar()
   initPie()
+  initScatter()
   // window.addEventListener('resize', () => {
   //   // 页面大小变化后Echarts也更改大小
   //   myChart.resize()
@@ -118,10 +155,11 @@ const initPage = async () => {
   await getDataDetail()
   await setShowData(originData.value)
   await setTableData(header.value, body.value)
+  await setDescribeData()
   await initChart()
   loading.value = false
 }
-const activeNames = ref(['1', '2'])
+const activeNames = ref(['1', '2', '3', '200'])
 </script>
 
 <template>
@@ -144,6 +182,16 @@ const activeNames = ref(['1', '2'])
         <a-table
           :columns="tableColumns"
           :data="tableData"
+          :pagination="false"
+        />
+      </el-collapse-item>
+      <el-collapse-item
+        title="基本特征"
+        name="200"
+      >
+        <a-table
+          :columns="describeColumns"
+          :data="describeData"
           :pagination="false"
         />
       </el-collapse-item>
@@ -178,6 +226,24 @@ const activeNames = ref(['1', '2'])
               v-for="(item, index) in pieList"
               :key="index"
               :ref="setPieRefs"
+              :style="{ width: '450px', height: '300px' }"
+            />
+          </div>
+        </el-card>
+      </el-collapse-item>
+      <el-collapse-item
+        title="散点图"
+        name="3"
+      >
+        <el-card
+          class="box-card"
+          shadow="hover"
+        >
+          <div class="content">
+            <div
+              v-for="(item, index) in scatterList"
+              :key="index"
+              :ref="setScatterRefs"
               :style="{ width: '450px', height: '300px' }"
             />
           </div>

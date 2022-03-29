@@ -70,6 +70,14 @@ const autoANA = () => {
   router.push({ name: 'echartResult', query: { id: id } })
 }
 
+const statisANA = () => {
+  router.push({ name: 'echartResult', query: { id: id } })
+}
+
+const customANA = () => {
+  router.push({ name: 'echartResult', query: { id: id } })
+}
+
 const initPage = async () => {
   loading.value = true
   await getDataDetail()
@@ -121,6 +129,7 @@ initPage()
               class="button"
               type="primary"
               long
+              @click="statisANA"
             >
               <template #icon>
                 <icon-bar-chart />
@@ -131,11 +140,12 @@ initPage()
               class="button"
               type="primary"
               long
+              @click="customANA"
             >
               <template #icon>
                 <icon-bar-chart />
               </template>
-              关联分析
+              自定义分析
             </a-button>
           </a-col>
         </a-row>
