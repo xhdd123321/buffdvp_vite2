@@ -7,3 +7,19 @@ export const EchartCreate = (data) => {
     data
   })
 }
+
+export const AnaGetCount = (data) => {
+  return request({
+    url: '/echart_api/ana/count/',
+    method: 'post',
+    data
+  })
+}
+
+export const AnaGetList = (data) => {
+  return request({
+    url: '/echart_api/ana/list/',
+    method: 'post',
+    data
+  })
+}

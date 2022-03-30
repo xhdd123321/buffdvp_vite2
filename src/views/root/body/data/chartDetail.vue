@@ -75,7 +75,7 @@ const statisANA = () => {
 }
 
 const customANA = () => {
-  router.push({ name: 'echartResult', query: { id: id } })
+  router.push({ name: 'echartCustom', params: { id: id, title: data.value?.title } })
 }
 
 const initPage = async () => {

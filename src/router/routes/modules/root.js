@@ -88,9 +88,19 @@ export default {
       children: [
         {
           path: '',
-          redirect: { name: 'echartTwo' },
+          redirect: { name: 'echartCustom' },
           meta: {
             requiresAuth: true
+          }
+        },
+        {
+          path: 'echart-Custom',
+          name: 'echartCustom',
+          component: () => import('@/views/root/body/echart/echartCustom.vue'),
+          meta: {
+            title: '自定义分析',
+            requiresAuth: true,
+            requiresAdmin: false
           }
         },
         {
@@ -100,15 +110,6 @@ export default {
           meta: {
             isHidden: true,
             title: '分析结果',
-            requiresAuth: true,
-            requiresAdmin: false
-          }
-        },
-        {
-          path: 'echart-Two',
-          name: 'echartTwo',
-          component: () => import('@/views/root/body/echart/echartTwo.vue'),
-          meta: {
             requiresAuth: true,
             requiresAdmin: false
           }
