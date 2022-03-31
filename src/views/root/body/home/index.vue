@@ -1,9 +1,10 @@
 <script setup>
 import { getDashboardData } from '@/api/dashboard'
 import { ElMessage } from 'element-plus'
-import { onBeforeUnmount, ref } from 'vue'
+import { getCurrentInstance, onBeforeUnmount, ref } from 'vue'
 import { useUserStore } from '@/store/userStore'
 import { useRouter } from 'vue-router'
+import { Modal } from '@arco-design/web-vue'
 import MemInfoEchart from '@/components/MemInfoEchart.vue'
 import CpuInfoEchart from '@/components/CpuInfoEchart.vue'
 const router = useRouter()
@@ -20,6 +21,14 @@ const fetchData = async () => {
     ElMessage.error('获取主页信息失败')
   }
 }
+
+const showIntroduction = () => {
+  Modal.info({
+    title: '简介',
+    content: 'BUFFDVP是一个基于Echarts+pandas的数据可视化分析平台，DVP即数据可视化平台Data visualization platform的缩写，BUFF则是游戏术语，指代游戏的中各种增益效果。BUFFDVP即为对可视化平台加上一个BUFF，让平台获得强力的增益效果！'
+  })
+}
+
 const memchart = ref(null)
 const cpuchart = ref(null)
 const initChart = async () => {
@@ -178,7 +187,6 @@ onBeforeUnmount(() => {
     </el-col>
     <el-col :span="8">
       <el-card
-        v-loading="loading"
         class="box-card"
         shadow="hover"
       >
@@ -227,7 +235,6 @@ onBeforeUnmount(() => {
         </div>
       </el-card>
       <el-card
-        v-loading="loading"
         class="box-card"
         shadow="hover"
       >
@@ -241,6 +248,18 @@ onBeforeUnmount(() => {
             class="divider-demo"
           >
             <a-button
+              type="secondary"
+              shape="round"
+              long
+              @click="showIntroduction"
+            >
+              <template #icon>
+                <icon-bulb />
+              </template>
+              平台简介
+            </a-button>
+            <a-divider class="half-divider" />
+            <a-button
               type="primary"
               shape="round"
               long
@@ -253,25 +272,15 @@ onBeforeUnmount(() => {
             </a-button>
             <a-divider class="half-divider" />
             <a-button
-              type="secondary"
+              type="primary"
               shape="round"
               long
+              @click="router.push({name:'visualGuide'})"
             >
               <template #icon>
                 <icon-bulb />
               </template>
-              平台简介
-            </a-button>
-            <a-divider class="half-divider" />
-            <a-button
-              type="secondary"
-              shape="round"
-              long
-            >
-              <template #icon>
-                <icon-bulb />
-              </template>
-              用户说明
+              可视化指南
             </a-button>
           </div>
         </div>

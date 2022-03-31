@@ -8,8 +8,8 @@ const router = useRouter()
 const userStore = useUserStore()
 const ruleFormRef = ref(null)
 const ruleForm = reactive({
-  username: '',
-  password: ''
+  username: 'admin',
+  password: '123456'
 })
 const rules = reactive({
   username: [

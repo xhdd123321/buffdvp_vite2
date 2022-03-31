@@ -37,7 +37,11 @@ export const useUserStore = defineStore('user', {
     async getInfo (pk) {
       const res = await UserRetrieve(pk)
       console.log(res)
-      res.data.image += ('?r=' + Math.random())
+      if (res.data.image) {
+        res.data.image += ('?r=' + Math.random())
+      } else {
+        res.data.image = 'src/assets/avatar.png'
+      }
       this.setInfo(res.data)
     },
 

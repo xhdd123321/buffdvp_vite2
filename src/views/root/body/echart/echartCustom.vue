@@ -16,6 +16,11 @@ import ScatterExponentialRegression from '@/components/chart/scatter-exponential
 import ScatterSimple from '@/components/chart/scatter-simple.vue'
 import ScatterLinearRegression from '@/components/chart/scatter-linear-regression.vue'
 import ScatterPolynomialRegression from '@/components/chart/scatter-polynomial-regression.vue'
+import WordcloudSimple from '@/components/chart/wordcloud-simple.vue'
+import LineSimple from '@/components/chart/line-simple.vue'
+import LineSmooth from '@/components/chart/line-smooth.vue'
+import AreaBasic from '@/components/chart/area-basic.vue'
+import LinePolar from '@/components/chart/line-polar.vue'
 const dataSetloading = ref(false)
 const route = useRoute()
 
@@ -250,6 +255,17 @@ initPage()
                 <template #default>瀑布图</template>
               </a-button>
             </a-space>
+            <a-space>
+              <a-button
+                type="primary"
+                @click="echartSelect(9)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>词云</template>
+              </a-button>
+            </a-space>
           </a-space>
           <a-space
             v-else-if="dataType==='2'"
@@ -258,7 +274,7 @@ initPage()
             <a-space>
               <a-button
                 type="primary"
-                @click="echartSelect(51)"
+                @click="echartSelect(21)"
               >
                 <template #icon>
                   <icon-apps />
@@ -267,7 +283,7 @@ initPage()
               </a-button>
               <a-button
                 type="primary"
-                @click="echartSelect(52)"
+                @click="echartSelect(22)"
               >
                 <template #icon>
                   <icon-apps />
@@ -276,7 +292,7 @@ initPage()
               </a-button>
               <a-button
                 type="primary"
-                @click="echartSelect(53)"
+                @click="echartSelect(23)"
               >
                 <template #icon>
                   <icon-apps />
@@ -285,12 +301,50 @@ initPage()
               </a-button>
               <a-button
                 type="primary"
-                @click="echartSelect(54)"
+                @click="echartSelect(24)"
               >
                 <template #icon>
                   <icon-apps />
                 </template>
                 <template #default>多项式回归</template>
+              </a-button>
+            </a-space>
+            <a-space>
+              <a-button
+                type="primary"
+                @click="echartSelect(25)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>基础折线图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(26)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>平滑折线图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(27)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>基础面积图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(28)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>极坐标双数值</template>
               </a-button>
             </a-space>
           </a-space>
@@ -316,53 +370,74 @@ initPage()
     <div>
       <a-empty v-if="chartShow[0]" />
       <PieBorderRadius
-        v-if="chartShow[1]"
+        v-else-if="chartShow[1]"
         :data="data"
       />
       <PieSimple
-        v-if="chartShow[2]"
+        v-else-if="chartShow[2]"
         :data="data"
       />
       <PieRoseTypeSimple
-        v-if="chartShow[3]"
+        v-else-if="chartShow[3]"
         :data="data"
       />
       <PieDoughnut
-        v-if="chartShow[4]"
+        v-else-if="chartShow[4]"
         :data="data"
       />
       <BarSimple
-        v-if="chartShow[5]"
+        v-else-if="chartShow[5]"
         :data="data"
       />
       <BarPolarLabelRadial
-        v-if="chartShow[6]"
+        v-else-if="chartShow[6]"
         :data="data"
       />
       <BarPolarLabelTangential
-        v-if="chartShow[7]"
+        v-else-if="chartShow[7]"
         :data="data"
       />
       <BarWaterfall
-        v-if="chartShow[8]"
+        v-else-if="chartShow[8]"
+        :data="data"
+      />
+      <WordcloudSimple
+        v-else-if="chartShow[9]"
         :data="data"
       />
       <ScatterSimple
-        v-if="chartShow[51]"
+        v-else-if="chartShow[21]"
         :data="data"
       />
       <ScatterExponentialRegression
-        v-if="chartShow[52]"
+        v-else-if="chartShow[22]"
         :data="data"
       />
       <ScatterLinearRegression
-        v-if="chartShow[53]"
+        v-else-if="chartShow[23]"
         :data="data"
       />
       <ScatterPolynomialRegression
-        v-if="chartShow[54]"
+        v-else-if="chartShow[24]"
         :data="data"
       />
+      <LineSimple
+        v-else-if="chartShow[25]"
+        :data="data"
+      />
+      <LineSmooth
+        v-else-if="chartShow[26]"
+        :data="data"
+      />
+      <AreaBasic
+        v-else-if="chartShow[27]"
+        :data="data"
+      />
+      <LinePolar
+        v-else-if="chartShow[28]"
+        :data="data"
+      />
+      <a-empty v-else />
     </div>
   </el-card>
 </template>

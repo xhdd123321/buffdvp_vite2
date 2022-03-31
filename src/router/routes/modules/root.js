@@ -232,6 +232,16 @@ export default {
             requiresAuth: true,
             requiresAdmin: false
           }
+        },
+        {
+          path: 'visual-guide',
+          name: 'visualGuide',
+          component: () => import('@/views/root/body/help/visualGuide.vue'),
+          meta: {
+            title: '可视化指南',
+            requiresAuth: true,
+            requiresAdmin: false
+          }
         }
       ]
     },
