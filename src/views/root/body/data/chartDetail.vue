@@ -156,6 +156,7 @@ initPage()
           :columns="tableColumns"
           :data="tableData"
           :pagination="false"
+          :scroll="{ x: '100%', y: 500}"
         />
       </div>
     </div>

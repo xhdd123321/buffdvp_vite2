@@ -42,8 +42,8 @@ const rich = {
 }
 
 const chartRef = ref(null)
+let myChart
 const initChart = () => {
-  const myChart = echarts.init(chartRef.value)
   myChart.setOption({
     backgroundColor: '#fff',
     title: {
@@ -84,37 +84,36 @@ const initChart = () => {
         name: '内存监控',
         type: 'pie',
         radius: ['42%', '50%'],
-        hoverAnimation: false,
+        emphasis: {
+          scale: false
+        },
         color: ['#94BFFF', '#0E42D2', '#49dff0', '#034079', '#6f81da', '#00ffb4'],
         label: {
-          normal: {
-            formatter: function (params, ticket, callback) {
-              let total = 0
-              let percent = 0
-              echartData.value.forEach(function (value, index, array) {
-                total += value.value
-              })
-              percent = ((params.value / total) * 100).toFixed(1)
-              return (
-                '{white|' +
+          formatter: function (params, ticket, callback) {
+            let total = 0
+            let percent = 0
+            echartData.value.forEach(function (value, index, array) {
+              total += value.value
+            })
+            percent = ((params.value / total) * 100).toFixed(1)
+            return (
+              '{white|' +
                   params.name +
                   '}\n{hr|}\n{yellow|' +
                   params.value + 'G' +
                   '}\n{blue|' +
                   percent +
                   '%}'
-              )
-            },
-            rich: rich
-          }
+            )
+          },
+          rich: rich
+
         },
         labelLine: {
-          normal: {
-            length: 55 * scale,
-            length2: 0,
-            lineStyle: {
-              color: '#0b5263'
-            }
+          length: 55 * scale,
+          length2: 0,
+          lineStyle: {
+            color: '#0b5263'
           }
         },
         data: echartData.value
@@ -123,6 +122,7 @@ const initChart = () => {
   })
 }
 onMounted(() => {
+  myChart = echarts.init(chartRef.value)
   initChart()
 })
 watch(echartData.value, () => {
@@ -133,7 +133,7 @@ watch(echartData.value, () => {
 <template>
   <div
     ref="chartRef"
-    :style="{ width: '450px', height: '300px' }"
+    :style="{ width: '400px', height: '300px' }"
   />
 </template>
 

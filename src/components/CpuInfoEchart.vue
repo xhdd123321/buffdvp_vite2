@@ -9,8 +9,8 @@ defineExpose({
 })
 
 const chartRef = ref(null)
+let myChart
 const initChart = () => {
-  const myChart = echarts.init(chartRef.value)
   console.log(percent.value)
   myChart.setOption({
     series: [
@@ -83,6 +83,7 @@ const initChart = () => {
   })
 }
 onMounted(() => {
+  myChart = echarts.init(chartRef.value)
   initChart()
 })
 watch(percent, (percent, prevPercent) => {

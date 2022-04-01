@@ -197,5 +197,5 @@ const onRegister = (formEl) => {
 </template>
 
 <style scoped>
-
+@import url("@/style/auth.css");
 </style>

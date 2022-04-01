@@ -17,7 +17,6 @@ const form = ref({})
       <a-form
         :model="form"
         :style="{width:'600px'}"
-        @submit="handleSubmit"
       >
         <a-form-item
           field="notice"

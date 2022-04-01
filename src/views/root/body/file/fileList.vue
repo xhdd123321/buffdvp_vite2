@@ -72,6 +72,7 @@ const onDelete = async (record) => {
   }
 }
 const onExtract = async (record) => {
+  loading.value = true
   try {
     const form = {
       file_id: record.id
@@ -82,6 +83,7 @@ const onExtract = async (record) => {
     console.log(err)
     ElMessage.error('提取失败')
   }
+  loading.value = false
 }
 const customRequest = async (option) => {
   try {

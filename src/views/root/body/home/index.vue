@@ -1,12 +1,14 @@
 <script setup>
 import { getDashboardData } from '@/api/dashboard'
 import { ElMessage } from 'element-plus'
-import { getCurrentInstance, onBeforeUnmount, ref } from 'vue'
+import { getCurrentInstance, onBeforeUnmount, ref, onMounted } from 'vue'
 import { useUserStore } from '@/store/userStore'
 import { useRouter } from 'vue-router'
 import { Modal } from '@arco-design/web-vue'
 import MemInfoEchart from '@/components/MemInfoEchart.vue'
 import CpuInfoEchart from '@/components/CpuInfoEchart.vue'
+
+import * as echarts from 'echarts'
 const router = useRouter()
 const loading = ref(true)
 const userStore = useUserStore()
@@ -29,18 +31,23 @@ const showIntroduction = () => {
   })
 }
 
-const memchart = ref(null)
-const cpuchart = ref(null)
+const memchart = ref(undefined)
+const cpuchart = ref(undefined)
 const initChart = async () => {
-  memchart.value.echartData[0].value = dashboardData.value.memInfo.free
-  memchart.value.echartData[1].value = dashboardData.value.memInfo.used
-  cpuchart.value.percent = dashboardData.value.cpuInfo.percent
+  if (memchart.value) {
+    memchart.value.echartData[0].value = dashboardData.value.memInfo.free
+    memchart.value.echartData[1].value = dashboardData.value.memInfo.used
+  }
+  if (cpuchart.value) {
+    cpuchart.value.percent = dashboardData.value.cpuInfo.percent
+  }
 }
 const initPage = async () => {
   await fetchData()
   await initChart()
   loading.value = false
 }
+
 initPage()
 const timer = setInterval(initPage, 2000)
 onBeforeUnmount(() => {
@@ -120,7 +127,10 @@ onBeforeUnmount(() => {
               fill
             >
               <div class="arco-statistic-title">服务器系统</div>
-              <a-tag color="arcoblue">{{ dashboardData?.sysInfo.platform || 'unknown' }}</a-tag>
+              <a-tag
+                style="width: 80%"
+                color="arcoblue"
+              >{{ dashboardData?.sysInfo.platform || 'unknown' }}</a-tag>
             </a-space>
           </a-col>
           <a-col :span="8">

@@ -9,7 +9,7 @@ const userStore = useUserStore()
 const ruleFormRef = ref(null)
 const ruleForm = reactive({
   username: 'admin',
-  password: '123456'
+  password: 'admin'
 })
 const rules = reactive({
   username: [
@@ -32,9 +32,9 @@ const rules = reactive({
       trigger: 'blur'
     },
     {
-      min: 6,
+      min: 5,
       max: 18,
-      message: 'Length should be 6 to 18',
+      message: 'Length should be 5 to 18',
       trigger: 'blur'
     }
   ]
@@ -126,5 +126,5 @@ const onRegister = () => {
 </template>
 
 <style scoped>
-
+@import url("@/style/auth.css");
 </style>

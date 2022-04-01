@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 
 const current = ref(1)
-const src = computed(() => './src/assets/help/quickStart_step' + current.value + '.png')
+const src = computed(() => '/help/quickStart_step' + current.value + '.png')
 const onPrev = () => {
   current.value = Math.max(1, current.value - 1)
 }

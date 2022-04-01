@@ -40,7 +40,7 @@ export const useUserStore = defineStore('user', {
       if (res.data.image) {
         res.data.image += ('?r=' + Math.random())
       } else {
-        res.data.image = 'src/assets/avatar.png'
+        res.data.image = '/avatar.png'
       }
       this.setInfo(res.data)
     },
