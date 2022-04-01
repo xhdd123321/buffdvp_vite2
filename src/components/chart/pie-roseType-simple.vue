@@ -37,7 +37,7 @@ const initChart = () => {
       {
         name: title,
         type: 'pie',
-        radius: [50, 250],
+        radius: ['20%', '100%'],
         center: ['50%', '50%'],
         roseType: 'area',
         itemStyle: {
