@@ -9,6 +9,8 @@ import '@arco-design/web-vue/dist/arco.css'
 
 // 导入公共样式
 import './style/index.css'
+// 导入自定义echart公共样式
+import './style/echart.css'
 
 const app = createApp(App)
 

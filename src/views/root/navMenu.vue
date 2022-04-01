@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import rootRoute from '@/router/routes/modules/root'
 import { useUserStore } from '@/store/userStore'
 
@@ -10,17 +10,21 @@ const menusList = rootRoute.children.slice(1)
 const activeTabName = computed(() => route.name)
 
 const defaultIcon = 'icon-apps'
+const isCollapse = ref(window.outerWidth < 1280)
+const toggleCollapse = () => {
+  isCollapse.value = !isCollapse.value
+}
 </script>
 
 <template>
   <el-aside
-    width="200px"
     class="aside"
   >
     <el-menu
       :default-active="activeTabName"
       class="el-menu"
       router
+      :collapse="isCollapse"
     >
       <img
         class="aside-avatar"
@@ -67,6 +71,13 @@ const defaultIcon = 'icon-apps'
           <span>{{ item.meta.title || item.name }}</span>
         </el-menu-item>
       </template>
+      <a-button
+        class="collapse-button"
+        @click="toggleCollapse"
+      >
+        <icon-menu-unfold v-if="isCollapse" />
+        <icon-menu-fold v-else />
+      </a-button>
     </el-menu>
   </el-aside>
 </template>
@@ -75,9 +86,26 @@ const defaultIcon = 'icon-apps'
 .el-menu{
   height: 100%;
 }
+.el-menu:not(.el-menu--collapse){
+  width: 200px;
+}
+.aside{
+  width: auto
+}
 .aside-avatar{
-  width: 190px;
+  width: inherit;
   margin: 10px 0 5px 0;
   align-items: center;
+}
+
+.collapse-button{
+  position: absolute;
+  padding: 0 12px;
+  height: 30px;
+  line-height: 30px;
+  margin: 11px;
+
+  right: 0;
+  bottom: 0;
 }
 </style>

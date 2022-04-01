@@ -78,12 +78,16 @@ watch(() => props.data, (percent, prevPercent) => {
   console.log(props.data)
   initChart()
 })
+window.onresize = function () {
+  // 自适应大小, 不用的话不会自适应大小。
+  myChart.resize()
+}
 </script>
 
 <template>
   <div
     ref="chartRef"
-    :style="{ width: '960px', height: '540px' }"
+    class="echart-custom"
   />
 </template>
 
