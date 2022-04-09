@@ -14,10 +14,25 @@ const chartRef = ref(null)
 const initChart = () => {
   const myData = props.data
   const xtitle = Object.keys(myData)[0]
-  const ytitle = Object.keys(myData)[1]
   const xlist = Object.values(myData)[0]
-  const ylist = Object.values(myData)[1]
+  const data = []
+  for (let i = 1; i < Object.keys(myData).length; i++) {
+    data.push({
+      name: Object.keys(myData)[i],
+      value: Object.values(myData)[i]
+    })
+  }
+  const indicator = []
+  for (const item of xlist) {
+    indicator.push({
+      name: item
+    })
+  }
   myChart.setOption({
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {},
     toolbox: {
       show: true,
       feature: {
@@ -25,20 +40,24 @@ const initChart = () => {
         saveAsImage: { show: true }
       }
     },
-    xAxis: {
-      name: xtitle,
-      type: 'category',
-      data: xlist
-    },
-    yAxis: {
-      name: ytitle,
-      type: 'value'
+    radar: {
+      // shape: 'circle',
+      indicator: indicator
     },
     series: [
       {
-        data: ylist,
-        type: 'line',
-        smooth: true
+        name: xtitle,
+        type: 'radar',
+        data: data || [
+          {
+            value: [4200, 3000, 20000, 35000, 50000, 18000],
+            name: 'Allocated Budget'
+          },
+          {
+            value: [5000, 14000, 28000, 26000, 42000, 21000],
+            name: 'Actual Spending'
+          }
+        ]
       }
     ]
   })

@@ -185,10 +185,10 @@ onBeforeUnmount(() => {
         <a-divider />
         <div class="chart-map">
           <a-row>
-            <a-col :span="12">
+            <a-col :span="11">
               <MemInfoEchart ref="memchart" />
             </a-col>
-            <a-col :span="12">
+            <a-col :span="13">
               <CpuInfoEchart ref="cpuchart" />
             </a-col>
           </a-row>
@@ -311,6 +311,8 @@ onBeforeUnmount(() => {
 }
 .chart-map{
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-box {

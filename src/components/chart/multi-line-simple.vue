@@ -14,10 +14,20 @@ const chartRef = ref(null)
 const initChart = () => {
   const myData = props.data
   const xtitle = Object.keys(myData)[0]
-  const ytitle = Object.keys(myData)[1]
   const xlist = Object.values(myData)[0]
-  const ylist = Object.values(myData)[1]
+  const series = []
+  for (let i = 1; i < Object.keys(myData).length; i++) {
+    series.push({
+      name: Object.keys(myData)[i],
+      type: 'line',
+      data: Object.values(myData)[i]
+    })
+  }
   myChart.setOption({
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {},
     toolbox: {
       show: true,
       feature: {
@@ -26,19 +36,43 @@ const initChart = () => {
       }
     },
     xAxis: {
-      name: xtitle,
       type: 'category',
-      data: xlist
+      name: xtitle || undefined,
+      data: xlist || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     },
     yAxis: {
-      name: ytitle,
       type: 'value'
     },
-    series: [
+    series: series || [
       {
-        data: ylist,
+        name: 'Email',
         type: 'line',
-        smooth: true
+        stack: 'Total',
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
+      {
+        name: 'Union Ads',
+        type: 'line',
+        stack: 'Total',
+        data: [220, 182, 191, 234, 290, 330, 310]
+      },
+      {
+        name: 'Video Ads',
+        type: 'line',
+        stack: 'Total',
+        data: [150, 232, 201, 154, 190, 330, 410]
+      },
+      {
+        name: 'Direct',
+        type: 'line',
+        stack: 'Total',
+        data: [320, 332, 301, 334, 390, 330, 320]
+      },
+      {
+        name: 'Search Engine',
+        type: 'line',
+        stack: 'Total',
+        data: [820, 932, 901, 934, 1290, 1330, 1320]
       }
     ]
   })

@@ -133,7 +133,7 @@ watch(echartData.value, () => {
 <template>
   <div
     ref="chartRef"
-    :style="{ width: '400px', height: '300px' }"
+    :style="{ width: '375px', height: '300px' }"
   />
 </template>
 

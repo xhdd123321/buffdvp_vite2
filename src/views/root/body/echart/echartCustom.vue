@@ -1,5 +1,5 @@
 <script setup>
-import { AnaGetCount, AnaGetList } from '@/api/echart'
+import { AnaGetCompare, AnaGetCount, AnaGetList } from '@/api/echart'
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 import { ChartList } from '@/api/chart'
@@ -21,14 +21,27 @@ import LineSimple from '@/components/chart/line-simple.vue'
 import LineSmooth from '@/components/chart/line-smooth.vue'
 import AreaBasic from '@/components/chart/area-basic.vue'
 import LinePolar from '@/components/chart/line-polar.vue'
+import MultiRadarSimple from '@/components/chart/multi-radar-simple.vue'
+import MultiLineSimple from '@/components/chart/multi-line-simple.vue'
+import MultiBarYCategory from '@/components/chart/multi-bar-y-category.vue'
+import MultiThemeRiverBasic from '@/components/chart/multi-themeRiver-basic.vue'
+import MultiBarYCategoryStack from '@/components/chart/multi-bar-y-category-stack.vue'
+import MultiAreaStack from '@/components/chart/multi-area-stack.vue'
+import MultiLineStep from '@/components/chart/multi-line-step.vue'
+import MultiBarPolarStackRadial from '@/components/chart/multi-bar-polar-stack-radial.vue'
+import MultiBarPolarStack from '@/components/chart/multi-bar-polar-stack.vue'
+import MultiPolarRoundCap from '@/components/chart/multi-polar-roundCap.vue'
+
 const dataSetloading = ref(false)
 const route = useRoute()
 
 const data = ref(undefined)
 const dataSet = ref([])
 const dataType = ref(undefined)
+const compareDataSet = ref('选择数据集')
 const getDataList = async (chartId) => {
   dataSetloading.value = true
+  dataSet.value = undefined
   try {
     const form = {
       chart_id: chartId
@@ -42,8 +55,15 @@ const getDataList = async (chartId) => {
     } else if (dataType.value === '2') {
       const res = await AnaGetList(form)
       dataSet.value = res.data
-      data.value = dataSet.value
+      // data.value = dataSet.value
       console.log(dataSet.value)
+    } else if (dataType.value === '3') {
+      const res = await AnaGetCompare(form)
+      dataSet.value = res.data
+      keyList.value = dataSet.value?.key_list || []
+      contentList.value = dataSet.value?.content_list || []
+      console.log(keyList.value)
+      console.log(contentList.value)
     } else {
       // ElMessage.warning('请选择数据集类型')
     }
@@ -71,6 +91,7 @@ const getChartList = async () => {
   }
 }
 const chartChange = async () => {
+  await initCompare()
   console.log(chartValue.value)
   await getDataList(chartValue.value)
   data.value = undefined
@@ -97,6 +118,7 @@ const chartShow = ref([true])
 
 const changeDataType = async (value) => {
   dataType.value = value
+  await initCompare()
   console.log('changeDataType:' + dataType.value)
   if (chartValue.value) {
     await getDataList(chartValue.value)
@@ -104,6 +126,47 @@ const changeDataType = async (value) => {
   data.value = undefined
   chartDataItem.value = undefined
   echartSelect(0)
+}
+
+const keyList = ref([])
+const contentList = ref([])
+const visible = ref(false)
+const selectedKey = ref(undefined)
+const selectedContent = ref(undefined)
+
+const initCompare = async () => {
+  keyList.value = []
+  contentList.value = []
+  selectedKey.value = undefined
+  selectedContent.value = undefined
+}
+
+const selectDataSet = () => {
+  visible.value = true
+}
+const cancelSelect = () => {
+  console.log('cancel')
+  visible.value = false
+}
+const confirmSelect = () => {
+  console.log('confirm')
+  try {
+    console.log(selectedKey.value)
+    console.log(selectedContent.value)
+    const temp = {}
+    Object.assign(temp, keyList.value[selectedKey.value])
+    chartDataItem.value = '数据集：' + '<' + Object.keys(keyList.value[selectedKey.value])[0] + '>'
+    for (const item of selectedContent.value) {
+      Object.assign(temp, contentList.value[item])
+      chartDataItem.value += '-' + Object.keys(contentList.value[item])[0]
+    }
+    console.log(temp)
+    data.value = temp
+    ElMessage.success('选择成功')
+  } catch (err) {
+    console.log(err)
+    ElMessage.error('选择失败')
+  }
 }
 
 const initPage = async () => {
@@ -157,12 +220,71 @@ initPage()
               <a-radio
                 value="2"
               >趋势</a-radio>
+              <a-radio
+                value="3"
+              >对比</a-radio>
             </a-radio-group>
+            <div
+              v-if="dataType==='3' && dataSet && dataSet.length !== 0"
+            >
+              <a-button
+                type="secondary"
+                :style="{width:'70%'}"
+                @click="selectDataSet"
+              >
+                <template #icon>
+                  <icon-plus />
+                </template>
+                {{ compareDataSet }}
+              </a-button>
+              <a-modal
+                v-model:visible="visible"
+                title="数据集选择"
+                draggable
+                width="50%"
+                @cancel="cancelSelect"
+                @ok="confirmSelect"
+              >
+                <a-typography-title :heading="6">
+                  category
+                </a-typography-title>
+                <a-radio-group
+                  v-model:model-value="selectedKey"
+                  type="button"
+                  size="mini"
+                >
+                  <a-radio
+                    v-for="(item, index) in keyList"
+                    :key="index"
+                    :value="index"
+                  >{{ Object.keys(item)[0] }}</a-radio>
+                </a-radio-group>
+                <a-divider />
+                <a-typography-title :heading="6">
+                  series
+                </a-typography-title>
+                <a-checkbox-group v-model:model-value="selectedContent">
+                  <a-checkbox
+                    v-for="(item, index) in contentList"
+                    :key="index"
+                    :value="index"
+                  >
+                    <template #checkbox="{ checked }">
+                      <a-tag
+                        :checked="checked"
+                        checkable
+                      >{{ Object.keys(item)[0] }}</a-tag>
+                    </template>
+                  </a-checkbox>
+                </a-checkbox-group>
+              </a-modal>
+            </div>
             <a-select
               v-model="chartDataItem"
               :loading="dataSetloading"
               :style="{width:'70%'}"
               placeholder="Please select dataSet..."
+              :disabled="dataType==='3'"
               @change="dataSetChange"
             >
               <a-option
@@ -348,6 +470,107 @@ initPage()
               </a-button>
             </a-space>
           </a-space>
+          <a-space
+            v-else-if="dataType==='3'"
+            direction="vertical"
+          >
+            <a-space>
+              <a-button
+                type="primary"
+                @click="echartSelect(41)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>多维折线图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(42)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>多维雷达图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(43)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>多维条形图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(44)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>河流图</template>
+              </a-button>
+            </a-space>
+            <a-space>
+              <a-button
+                type="primary"
+                @click="echartSelect(45)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>堆叠条形图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(46)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>堆叠面积图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(47)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>多维阶梯图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(48)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>堆叠极坐标图</template>
+              </a-button>
+            </a-space>
+            <a-space>
+              <a-button
+                type="primary"
+                @click="echartSelect(49)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>堆叠环形极坐标图</template>
+              </a-button>
+              <a-button
+                type="primary"
+                @click="echartSelect(50)"
+              >
+                <template #icon>
+                  <icon-apps />
+                </template>
+                <template #default>多维圆角环形图</template>
+              </a-button>
+            </a-space>
+          </a-space>
           <a-empty v-else>
             <template #image>
               <icon-exclamation-circle-fill />
@@ -435,6 +658,46 @@ initPage()
       />
       <LinePolar
         v-else-if="chartShow[28]"
+        :data="data"
+      />
+      <MultiLineSimple
+        v-else-if="chartShow[41]"
+        :data="data"
+      />
+      <MultiRadarSimple
+        v-else-if="chartShow[42]"
+        :data="data"
+      />
+      <MultiBarYCategory
+        v-else-if="chartShow[43]"
+        :data="data"
+      />
+      <MultiThemeRiverBasic
+        v-else-if="chartShow[44]"
+        :data="data"
+      />
+      <MultiBarYCategoryStack
+        v-else-if="chartShow[45]"
+        :data="data"
+      />
+      <MultiAreaStack
+        v-else-if="chartShow[46]"
+        :data="data"
+      />
+      <MultiLineStep
+        v-else-if="chartShow[47]"
+        :data="data"
+      />
+      <MultiBarPolarStackRadial
+        v-else-if="chartShow[48]"
+        :data="data"
+      />
+      <MultiBarPolarStack
+        v-else-if="chartShow[49]"
+        :data="data"
+      />
+      <MultiPolarRoundCap
+        v-else-if="chartShow[50]"
         :data="data"
       />
       <a-empty v-else />

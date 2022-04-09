@@ -23,3 +23,11 @@ export const AnaGetList = (data) => {
     data
   })
 }
+
+export const AnaGetCompare = (data) => {
+  return request({
+    url: '/echart_api/ana/compare/',
+    method: 'post',
+    data
+  })
+}

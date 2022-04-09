@@ -14,31 +14,27 @@ const chartRef = ref(null)
 const initChart = () => {
   const myData = props.data
   const xtitle = Object.keys(myData)[0]
-  const ytitle = Object.keys(myData)[1]
   const xlist = Object.values(myData)[0]
-  const ylist = Object.values(myData)[1]
+  const data = []
+  for (let j = 0; j < xlist.length; j++) {
+    const item = xlist[j]
+    for (let i = 1; i < Object.keys(myData).length; i++) {
+      data.push([j, Object.values(myData)[i][j], Object.keys(myData)[i]])
+    }
+  }
+  console.log(data)
   myChart.setOption({
-    toolbox: {
-      show: true,
-      feature: {
-        dataView: { show: true, readOnly: false },
-        saveAsImage: { show: true }
-      }
-    },
-    xAxis: {
-      name: xtitle,
-      type: 'category',
-      data: xlist
-    },
-    yAxis: {
-      name: ytitle,
-      type: 'value'
+    legend: {},
+    singleAxis: {
+      max: 'dataMax'
     },
     series: [
       {
-        data: ylist,
-        type: 'line',
-        smooth: true
+        type: 'themeRiver',
+        data: data,
+        label: {
+          show: false
+        }
       }
     ]
   })

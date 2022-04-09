@@ -14,10 +14,23 @@ const chartRef = ref(null)
 const initChart = () => {
   const myData = props.data
   const xtitle = Object.keys(myData)[0]
-  const ytitle = Object.keys(myData)[1]
   const xlist = Object.values(myData)[0]
-  const ylist = Object.values(myData)[1]
+  const series = []
+  for (let i = 1; i < Object.keys(myData).length; i++) {
+    series.push({
+      name: Object.keys(myData)[i],
+      type: 'bar',
+      data: Object.values(myData)[i]
+    })
+  }
   myChart.setOption({
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    legend: {},
     toolbox: {
       show: true,
       feature: {
@@ -25,20 +38,31 @@ const initChart = () => {
         saveAsImage: { show: true }
       }
     },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
     xAxis: {
-      name: xtitle,
-      type: 'category',
-      data: xlist
+      type: 'value',
+      boundaryGap: [0, 0.01]
     },
     yAxis: {
-      name: ytitle,
-      type: 'value'
+      type: 'category',
+      name: xtitle,
+      data: xlist || ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
     },
-    series: [
+    series: series || [
       {
-        data: ylist,
-        type: 'line',
-        smooth: true
+        name: '2011',
+        type: 'bar',
+        data: [18203, 23489, 29034, 104970, 131744, 630230]
+      },
+      {
+        name: '2012',
+        type: 'bar',
+        data: [19325, 23438, 31000, 121594, 134141, 681807]
       }
     ]
   })

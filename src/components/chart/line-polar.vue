@@ -32,6 +32,13 @@ const initChart = () => {
         type: 'cross'
       }
     },
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { show: true, readOnly: false },
+        saveAsImage: { show: true }
+      }
+    },
     angleAxis: {
       type: 'value',
       startAngle: 0

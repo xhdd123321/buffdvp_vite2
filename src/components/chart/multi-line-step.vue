@@ -14,31 +14,58 @@ const chartRef = ref(null)
 const initChart = () => {
   const myData = props.data
   const xtitle = Object.keys(myData)[0]
-  const ytitle = Object.keys(myData)[1]
   const xlist = Object.values(myData)[0]
-  const ylist = Object.values(myData)[1]
+  const series = []
+  for (let i = 1; i < Object.keys(myData).length; i++) {
+    series.push({
+      name: Object.keys(myData)[i],
+      type: 'line',
+      step: 'middle',
+      data: Object.values(myData)[i]
+    })
+  }
   myChart.setOption({
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
     toolbox: {
-      show: true,
       feature: {
-        dataView: { show: true, readOnly: false },
-        saveAsImage: { show: true }
+        saveAsImage: {}
       }
     },
     xAxis: {
-      name: xtitle,
       type: 'category',
-      data: xlist
+      data: xlist,
+      name: xtitle
     },
     yAxis: {
-      name: ytitle,
       type: 'value'
     },
-    series: [
+    series: series || [
       {
-        data: ylist,
+        name: 'Step Start',
         type: 'line',
-        smooth: true
+        step: 'start',
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
+      {
+        name: 'Step Middle',
+        type: 'line',
+        step: 'middle',
+        data: [220, 282, 201, 234, 290, 430, 410]
+      },
+      {
+        name: 'Step End',
+        type: 'line',
+        step: 'end',
+        data: [450, 432, 401, 454, 590, 530, 510]
       }
     ]
   })

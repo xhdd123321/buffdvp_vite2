@@ -108,4 +108,7 @@ const toggleCollapse = () => {
   right: 0;
   bottom: 0;
 }
+.el-aside::-webkit-scrollbar {
+  display: none;
+}
 </style>

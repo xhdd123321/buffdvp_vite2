@@ -18,6 +18,13 @@ const initChart = () => {
   const xlist = Object.values(myData)[0]
   const ylist = Object.values(myData)[1]
   myChart.setOption({
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { show: true, readOnly: false },
+        saveAsImage: { show: true }
+      }
+    },
     xAxis: {
       name: xtitle,
       type: 'category',
