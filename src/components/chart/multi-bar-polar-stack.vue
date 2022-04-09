@@ -36,6 +36,13 @@ const initChart = () => {
       name: xtitle,
       z: 10
     },
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { show: true, readOnly: false },
+        saveAsImage: { show: true }
+      }
+    },
     polar: {},
     series: series || [
       {

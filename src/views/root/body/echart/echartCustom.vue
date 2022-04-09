@@ -156,10 +156,13 @@ const confirmSelect = () => {
     const temp = {}
     Object.assign(temp, keyList.value[selectedKey.value])
     chartDataItem.value = '数据集：' + '<' + Object.keys(keyList.value[selectedKey.value])[0] + '>'
+    chartDataItem.value += '['
     for (const item of selectedContent.value) {
       Object.assign(temp, contentList.value[item])
-      chartDataItem.value += '-' + Object.keys(contentList.value[item])[0]
+      chartDataItem.value += Object.keys(contentList.value[item])[0] + ','
     }
+    chartDataItem.value = chartDataItem.value.substring(0, chartDataItem.value.length - 1)
+    chartDataItem.value += ']'
     console.log(temp)
     data.value = temp
     ElMessage.success('选择成功')
@@ -282,7 +285,7 @@ initPage()
             <a-select
               v-model="chartDataItem"
               :loading="dataSetloading"
-              :style="{width:'70%'}"
+              :style="{width:'70%', color:'#000', opacity:1}"
               placeholder="Please select dataSet..."
               :disabled="dataType==='3'"
               @change="dataSetChange"
@@ -706,5 +709,4 @@ initPage()
 </template>
 
 <style scoped>
-
 </style>

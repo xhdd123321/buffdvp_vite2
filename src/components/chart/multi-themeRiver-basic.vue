@@ -24,6 +24,13 @@ const initChart = () => {
   }
   console.log(data)
   myChart.setOption({
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { show: true, readOnly: false },
+        saveAsImage: { show: true }
+      }
+    },
     legend: {},
     singleAxis: {
       max: 'dataMax'

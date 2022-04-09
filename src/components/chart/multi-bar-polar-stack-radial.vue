@@ -29,6 +29,13 @@ const initChart = () => {
     })
   }
   myChart.setOption({
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { show: true, readOnly: false },
+        saveAsImage: { show: true }
+      }
+    },
     angleAxis: {
       type: 'category',
       data: xlist,

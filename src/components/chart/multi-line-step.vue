@@ -36,8 +36,10 @@ const initChart = () => {
       containLabel: true
     },
     toolbox: {
+      show: true,
       feature: {
-        saveAsImage: {}
+        dataView: { show: true, readOnly: false },
+        saveAsImage: { show: true }
       }
     },
     xAxis: {
