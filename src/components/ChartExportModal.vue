@@ -50,6 +50,8 @@ const confirmSelect = async () => {
         <a-select v-model="form.type">
           <a-option value="excel">Excel</a-option>
           <a-option value="csv">CSV</a-option>
+          <a-option value="txt">TXT</a-option>
+          <a-option value="json">Json</a-option>
         </a-select>
       </a-form-item>
     </a-form>
