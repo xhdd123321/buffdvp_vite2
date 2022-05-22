@@ -104,6 +104,16 @@ export default {
           }
         },
         {
+          path: 'echart-Displayer',
+          name: 'echartDisplayer',
+          component: () => import('@/views/root/body/echart/echartDisplayer.vue'),
+          meta: {
+            title: '大屏可视化',
+            requiresAuth: true,
+            requiresAdmin: false
+          }
+        },
+        {
           path: 'echart-result',
           name: 'echartResult',
           component: () => import('@/views/root/body/echart/echartResult.vue'),

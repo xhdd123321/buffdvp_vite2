@@ -67,7 +67,7 @@ const setTableData = async (header, body) => {
 }
 
 const autoANA = () => {
-  router.push({ name: 'echartResult', query: { id: id } })
+  router.push({ name: 'echartDisplayer', query: { id: id } })
 }
 
 const statisANA = () => {
