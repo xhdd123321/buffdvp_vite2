@@ -35,7 +35,8 @@ const initChart = () => {
     },
     legend: {
       orient: 'vertical',
-      left: 'left'
+      left: 'left',
+      type: 'scroll'
     },
     series: [
       {

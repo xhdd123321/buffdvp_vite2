@@ -35,7 +35,8 @@ const initChart = () => {
     },
     legend: {
       top: '5%',
-      left: 'center'
+      left: 'center',
+      type: 'scroll'
     },
     series: [
       {

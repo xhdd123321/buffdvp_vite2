@@ -24,7 +24,11 @@ const initChart = () => {
   }
   myChart.setOption({
     legend: {
-      top: 'bottom'
+      top: 'bottom',
+      type: 'scroll'
+    },
+    tooltip: {
+      trigger: 'item'
     },
     toolbox: {
       show: true,
