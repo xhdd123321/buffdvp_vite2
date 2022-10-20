@@ -22,6 +22,7 @@ const exitSystem = () => {
           <a-typography-title :heading="6">前端源代码</a-typography-title>
           <a-link
             href="https://github.com/xhdd123321/buffdvp_vite2"
+            target="_blank"
             icon
           >https://github.com/xhdd123321/buffdvp_vite2</a-link>
         </div>
@@ -33,6 +34,7 @@ const exitSystem = () => {
           <a-typography-title :heading="6">后端源代码</a-typography-title>
           <a-link
             href="https://github.com/xhdd123321/buffdvp_django"
+            target="_blank"
             icon
           >https://github.com/xhdd123321/buffdvp_django</a-link>
         </div>
