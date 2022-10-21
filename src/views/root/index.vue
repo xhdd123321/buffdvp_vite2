@@ -2,6 +2,7 @@
 import NavMenu from './navMenu.vue'
 import Breadcrumb from './breadcrumb.vue'
 import Header from './header.vue'
+import Footer from './footer.vue'
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import Header from './header.vue'
       <el-container>
         <el-header class="header1"><Header /></el-header>
         <el-header class="header2"><Breadcrumb /></el-header>
-        <el-main class="content"><router-view /></el-main>
+        <el-main class="content"><router-view /><Footer /></el-main>
       </el-container>
     </el-container>
   </div>
